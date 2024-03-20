@@ -1,0 +1,69 @@
+{
+  "name": "exon",
+  "tree": {
+    "$path": "src",
+    "addons": {
+      "$className": "Folder",
+      "createReactHook": {
+        "$path": "react/hooks.project.json"
+      },
+      "input": {
+        "$path": "addons/input/default.project.json",
+        "rednet": {
+          "$path": "rednet/default.project.json"
+        },
+        "tidy": {
+          "$path": "addons/tidy/default.project.json"
+        }
+      },
+      "tidy": {
+        "$path": "addons/tidy/default.project.json"
+      }
+    },
+    "controllers": {
+      "$path": "controllers/default.project.json",
+      "symbol": {
+        "$path": "addons/symbol/default.project.json"
+      }
+    },
+    "db": {
+      "$path": "db/default.project.json",
+      "rednet": {
+        "$path": "rednet/default.project.json"
+      },
+      "tidy": {
+        "$path": "addons/tidy/default.project.json"
+      }
+    },
+    "oneframe": {
+      "$path": "oneframe/default.project.json",
+      "freeze": {
+        "$path": "addons/freeze/default.project.json"
+      },
+      "symbol": {
+        "$path": "addons/symbol/default.project.json"
+      },
+      "tidy": {
+        "$path": "addons/tidy/default.project.json"
+      }
+    },
+    "react": {
+      "$path": "react/default.project.json",
+      "freeze": {
+        "$path": "addons/freeze/default.project.json"
+      },
+      "rednet": {
+        "$path": "rednet/default.project.json"
+      },
+      "symbol": {
+        "$path": "addons/symbol/default.project.json"
+      }
+    },
+    "rednet": {
+      "$path": "rednet/default.project.json"
+    },
+    "util": {
+      "$path": "util/default.project.json"
+    }
+  }
+}

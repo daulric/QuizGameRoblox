@@ -1,0 +1,37 @@
+{
+  "name": "QuizGameRoblox",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+
+      "Packages": {
+        "$path": "Packages"
+      },
+
+      "Shared": {
+        "$path": "Game/Shared/Client"
+      }
+    },
+
+    "ServerScriptService": {
+      "Server": {
+        "$path": "Game/Server"
+      }
+    },
+
+    "ServerStorage": {
+      "Shared": {
+        "$path": "Game/Shared/Client"
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": {
+          "$path": "Game/Client"
+        }
+      }
+    }
+  }
+}

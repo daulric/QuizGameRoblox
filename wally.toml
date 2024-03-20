@@ -1,0 +1,8 @@
+[package]
+name = "ulric/quizgameroblox"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+
+[dependencies]
+exon = "daulric/exon@0.0.46"
