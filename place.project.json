@@ -22,7 +22,7 @@
 
     "ServerStorage": {
       "Shared": {
-        "$path": "Game/Shared/Client"
+        "$path": "Game/Shared/Server"
       }
     },
 

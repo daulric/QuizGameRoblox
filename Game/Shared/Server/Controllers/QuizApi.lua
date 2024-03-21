@@ -26,7 +26,6 @@ function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType)
             self.Info.QuizInfo[i] = v
         end
     end
-
 end
 
 
