@@ -11,7 +11,13 @@ local ItemsFolder = script.Parent:WaitForChild("Items")
 local QuizScreen = require(ScreenFolder.Screen)
 local Label = require(ScreenFolder.Label)
 local QuestionLabel = require(ItemsFolder.QuestionLabel)
+local ButtonArea = require(ScreenFolder.ButtonArea)
 
+function QuizComponent:init()
+    self:setState({
+        Buttons = {}, -- Can Hold Up to 4 Buttons!
+    })
+end
 
 function QuizComponent:render()
     return react.createElement("ScreenGui", {
@@ -21,6 +27,7 @@ function QuizComponent:render()
         ScreenElement = react.createElement(QuizScreen, {}, {
             Label = react.createElement(Label),
             QuestionLabel = react.createElement(QuestionLabel),
+            ButtonArea = react.createElement(ButtonArea, {}),
         })
     })
 end
