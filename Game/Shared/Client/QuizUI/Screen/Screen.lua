@@ -2,7 +2,6 @@ local exon = require(game.ReplicatedStorage.Packages.exon)
 
 local react = exon.react
 
-
 local ScreenComponent = react.Component:extend("Quiz Screen Component")
 
 function ScreenComponent:render()
