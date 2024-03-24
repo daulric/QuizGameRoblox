@@ -16,10 +16,10 @@ function CompileQuiz:start()
 
     local Element = React.createElement(Component)
 
-    Players.PlayerAdded:Connect(function(player)
-        player.CharacterAdded:Connect(function()
-            React.mount(Element, player.PlayerGui)
-        end)
+    local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
+
+    player.CharacterAdded:Connect(function()
+        React.mount(Element, player.PlayerGui)
     end)
 end
 

@@ -6,12 +6,11 @@ local QuizComponent = react.Component:extend("QuizUI")
 
 -- Components
 local ScreenFolder = script.Parent:WaitForChild("Screen")
-local ItemsFolder = script.Parent:WaitForChild("Items")
 
 local QuizScreen = require(ScreenFolder.Screen)
 local Label = require(ScreenFolder.Label)
-local QuestionLabel = require(ItemsFolder.QuestionLabel)
-local ButtonArea = require(ScreenFolder.ButtonArea)
+
+local QAHandler = require(script.Parent:WaitForChild("QAHandler"))
 
 function QuizComponent:init()
     self:setState({
@@ -26,8 +25,7 @@ function QuizComponent:render()
     }, self.props[react.Children], {
         ScreenElement = react.createElement(QuizScreen, {}, {
             Label = react.createElement(Label),
-            QuestionLabel = react.createElement(QuestionLabel),
-            ButtonArea = react.createElement(ButtonArea, {}),
+            QA = react.createElement(QAHandler),
         })
     })
 end

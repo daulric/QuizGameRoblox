@@ -5,15 +5,15 @@ local react = exon.react
 local OptionButtonComponent = react.Component:extend("Option Button")
 
 function OptionButtonComponent:init()
-    self.text, self.updateText = react.createBinding("")
+    --self.text, self.updateText = react.createBinding("")
 end
 
 function OptionButtonComponent:render()
 
     return react.createElement("TextButton", {
         Name = "Option Button",
-        Text = self.text:map(function(value) return value end),
-        TextScaled = true,
+        Text = self.props.Text,
+        TextSize = 30,
         BackgroundColor3 = Color3.fromRGB(46, 46, 46),
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Size = UDim2.new(0.5, 0, 0.5, 0),

@@ -4,27 +4,32 @@ local exon = require(game.ReplicatedStorage.Packages.exon)
 local HttpService = game:GetService("HttpService")
 
 local Controllers = exon.controllers
+local rednet = exon.rednet
 
 local QuizApi = Controllers.CreateController {
     Name = "Quiz Api",
     Info = {
         QuizInfo = {}
-    }
+    },
+
+    Signal = rednet.createSignal(),
 }
 
 type GameType = "multiple" | "boolean";
 type difficulty = "easy" | "hard" | "medium";
 
+function QuizApi:Fire(data)
+    self.Signal:Fire(data)
+end
 
 -- Getting Info using the API
 function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType)
     local url = `https://opentdb.com/api.php?amount={amount}&category=18&difficulty={difficulty}&type={type}`
-    local info = HttpService:JSONDecode(url)
+    local urlData = HttpService:GetAsync(url)
+    local info = HttpService:JSONDecode(urlData)
 
-    if type(info) == "table" then
-        for i, v in pairs(info) do
-            self.Info.QuizInfo[i] = v
-        end
+    for i, v in pairs(info) do
+        self.Info.QuizInfo[i] = v
     end
 end
 
