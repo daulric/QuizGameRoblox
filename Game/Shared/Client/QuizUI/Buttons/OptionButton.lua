@@ -13,7 +13,7 @@ function OptionButtonComponent:render()
     return react.createElement("TextButton", {
         Name = "Option Button",
         Text = self.props.Text,
-        TextSize = 30,
+        TextScaled = true,
         BackgroundColor3 = Color3.fromRGB(46, 46, 46),
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Size = UDim2.new(0.5, 0, 0.5, 0),

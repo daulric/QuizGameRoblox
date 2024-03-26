@@ -1,1 +1,1 @@
-return require(script.Parent._Index["daulric_exon@0.0.47"]["exon"])
+return require(script.Parent._Index["daulric_exon@0.0.48"]["exon"])
