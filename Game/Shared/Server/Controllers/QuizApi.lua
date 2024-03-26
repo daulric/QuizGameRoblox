@@ -25,8 +25,10 @@ end
 -- Getting Info using the API
 function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType)
     local url = `https://opentdb.com/api.php?amount={amount}&category=18&difficulty={difficulty}&type={type}`
-    local urlData = HttpService:GetAsync(url)
+    local urlData = HttpService:GetAsync(url, true)
     local info = HttpService:JSONDecode(urlData)
+
+    table.clear(self.Info.QuizInfo)
 
     for i, v in pairs(info) do
         self.Info.QuizInfo[i] = v

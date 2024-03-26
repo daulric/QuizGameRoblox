@@ -14,16 +14,23 @@ function QuizManager:preload()
     self.isAdded = {}
 end
 
+function QuizManager:GetQuiz(player: Player)
+    QuizApi:Get(5, "easy", "multiple")
+    task.wait()
+    RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
+end
+
 function QuizManager:playerAdded(player)
     print("player added")
     if self.isAdded[player.UserId] == nil then
         self.isAdded[player.UserId] = true
-        QuizApi:Get(10, "easy", "multiple")
-
-        task.wait(2)
-        RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
+        self:GetQuiz(player)
         print("sent the data")
     end
+end
+
+function QuizManager:playerRemoved(player)
+    self.isAdded[player.UserId] = nil
 end
 
 function QuizManager:start()
@@ -32,8 +39,16 @@ function QuizManager:start()
         self:playerAdded(v)
     end
 
+    RedNet.listen("resend_quiz", function(player)
+        self:GetQuiz(player)
+    end)
+
     Players.PlayerAdded:Connect(function(player)
         self:playerAdded(player)
+    end)
+
+    Players.PlayerRemoving:Connect(function(player)
+        self:playerRemoved(player)
     end)
 
 end

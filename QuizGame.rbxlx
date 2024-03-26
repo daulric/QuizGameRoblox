@@ -13,7 +13,7 @@
         </Properties>
         <Item class="Folder" referent="3">
           <Properties>
-            <string name="Name">daulric_exon@0.0.47</string>
+            <string name="Name">daulric_exon@0.0.48</string>
           </Properties>
           <Item class="ModuleScript" referent="4">
             <Properties>
@@ -4435,6 +4435,7 @@ local react = {
     forwardRef = forwardRef,
 
     --// Event, Property, and Attribute Signals
+    Bind = Binding.bind_key,
     Change = data.Change,
     Event = data.Event,
     AttributeChange = data.AttributeChange,
@@ -4461,6 +4462,7 @@ local ElementType = require(script.Parent.markers.ElementType)
 local BindingImpl = Symbol.assign("BindingImpl")
 
 local BindingInternalApi = {}
+BindingInternalApi.bind_key = BindingImpl
 
 local bindingPrototype = {}
 
@@ -6865,7 +6867,7 @@ end</string>
       <Item class="ModuleScript" referent="76">
         <Properties>
           <string name="Name">exon</string>
-          <string name="Source"><![CDATA[return require(script.Parent._Index["daulric_exon@0.0.47"]["exon"])
+          <string name="Source"><![CDATA[return require(script.Parent._Index["daulric_exon@0.0.48"]["exon"])
 ]]></string>
         </Properties>
       </Item>
@@ -6878,21 +6880,52 @@ end</string>
         <Properties>
           <string name="Name">Components</string>
         </Properties>
+        <Item class="ModuleScript" referent="79">
+          <Properties>
+            <string name="Name">CompileQuizUI</string>
+            <string name="Source">local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Exon = require(ReplicatedStorage:WaitForChild("Packages").exon)
+
+local OneFrame = Exon.oneframe
+local React = Exon.react
+
+local QuizUIFolder = ReplicatedStorage:WaitForChild("Shared"):WaitForChild("QuizUI")
+
+local Component = require(QuizUIFolder.Quiz)
+
+local CompileQuiz = OneFrame.Component.create("Compile Quiz UI")
+
+
+function CompileQuiz:start()
+
+    local Element = React.createElement(Component)
+
+    local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
+
+    player.CharacterAdded:Connect(function()
+        React.mount(Element, player.PlayerGui)
+    end)
+end
+
+return CompileQuiz</string>
+          </Properties>
+        </Item>
       </Item>
-      <Item class="Folder" referent="79">
+      <Item class="Folder" referent="80">
         <Properties>
           <string name="Name">Others</string>
         </Properties>
       </Item>
-      <Item class="Folder" referent="80">
+      <Item class="Folder" referent="81">
         <Properties>
           <string name="Name">QuizUI</string>
         </Properties>
-        <Item class="Folder" referent="81">
+        <Item class="Folder" referent="82">
           <Properties>
             <string name="Name">Buttons</string>
           </Properties>
-          <Item class="ModuleScript" referent="82">
+          <Item class="ModuleScript" referent="83">
             <Properties>
               <string name="Name">OptionButton</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -6910,7 +6943,7 @@ function OptionButtonComponent:render()
     return react.createElement("TextButton", {
         Name = "Option Button",
         Text = self.props.Text,
-        TextSize = 30,
+        TextScaled = true,
         BackgroundColor3 = Color3.fromRGB(46, 46, 46),
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Size = UDim2.new(0.5, 0, 0.5, 0),
@@ -6929,11 +6962,11 @@ return OptionButtonComponent</string>
             </Properties>
           </Item>
         </Item>
-        <Item class="Folder" referent="83">
+        <Item class="Folder" referent="84">
           <Properties>
             <string name="Name">Items</string>
           </Properties>
-          <Item class="ModuleScript" referent="84">
+          <Item class="ModuleScript" referent="85">
             <Properties>
               <string name="Name">QuestionLabel</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -6966,8 +6999,48 @@ end
 return QuizQuestionComponent</string>
             </Properties>
           </Item>
+          <Item class="ModuleScript" referent="86">
+            <Properties>
+              <string name="Name">ScoreLabel</string>
+              <string name="Source">local Players = game:GetService("Players")
+local exon = require(game.ReplicatedStorage.Packages.exon)
+
+local react = exon.react
+
+local ScoreLabelComponent = react.Component:extend("Score Label")
+
+function ScoreLabelComponent:init()
+    self.Score, self.updateScore = react.createBinding(0)
+end
+
+function ScoreLabelComponent:didMount()
+    local player = Players.LocalPlayer
+
+    player:GetAttributeChangedSignal("Score"):Connect(function()
+        self.updateScore(player:GetAttribute("Score"))
+    end)
+
+end
+
+function ScoreLabelComponent:render()
+    return react.createElement("TextLabel", {
+        Name = "Score Label",
+        Text = self.Score:map(function(value)
+            return "Score: "..0
+        end),
+
+        Size = UDim2.fromScale(0.5, 0.5),
+        BackgroundTransparency = 1,
+        TextScaled = true,
+        
+    })
+end
+
+return ScoreLabelComponent</string>
+            </Properties>
+          </Item>
         </Item>
-        <Item class="ModuleScript" referent="85">
+        <Item class="ModuleScript" referent="87">
           <Properties>
             <string name="Name">QAHandler</string>
             <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -6987,15 +7060,72 @@ local QAHandler = react.Component:extend("QA Handler")
 local OptionButton = require(script.Parent:WaitForChild("Buttons").OptionButton)
 
 function QAHandler:init()
-    self.question, self.updateQuestion = react.createBinding("Question 1:")
-    self.state.Buttons = {}
+    self.question, self.updateQuestion = react.createBinding("")
+    self.questionData, self.updateQuestionData = react.createBinding({})
+    self:setState({
+        Buttons = {},
+    })
+
 end
 
 function QAHandler:didMount()
     print("QA handler Did Mount")
+
     rednet.listen("QuizGetNow", function(data)
-        print(data)
+        self.updateQuestionData(data)
     end)
+
+    self.questionData[react.Bind].subscribe(function(data)
+        local results = data.results
+        local tempStore = {}
+        local buttons = {}
+        local Answered = false
+
+        for i = 1, #results do
+            local Question_Queue = results[i]
+
+            self.updateQuestion(Question_Queue.question)
+            table.insert(tempStore, Question_Queue.correct_answer)
+
+            for i, v in pairs(Question_Queue.incorrect_answers) do
+                table.insert(tempStore, v)
+            end
+
+            for i = 1, #tempStore do
+                local chosenNum = math.random(1, #tempStore)
+                local element = react.createElement(OptionButton, {
+                    Text = tempStore[chosenNum],
+                    mouseClicked = function(element)
+                        if element.Text == Question_Queue.correct_answer then
+                            element.BackgroundColor3 = Color3.fromRGB(30, 70, 9)
+                            rednet:FireServer("score_update", true)
+                        else
+                            element.BackgroundColor3 = Color3.fromRGB(84, 11, 11)
+                            rednet:FireServer("score_update", false)
+                        end
+
+                        Answered = true
+                    end
+                })
+
+                table.insert(buttons, element)
+                table.remove(tempStore, chosenNum)
+            end
+
+            self:setState({
+                Buttons = buttons
+            })
+
+            repeat
+                task.wait(1)
+            until (Answered == true)
+
+            Answered = false
+            table.clear(tempStore)
+            table.clear(buttons)
+        end
+    end)
+
 end
 
 function QAHandler:render()
@@ -7013,7 +7143,7 @@ end
 return QAHandler</string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="86">
+        <Item class="ModuleScript" referent="88">
           <Properties>
             <string name="Name">Quiz</string>
             <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7024,9 +7154,11 @@ local QuizComponent = react.Component:extend("QuizUI")
 
 -- Components
 local ScreenFolder = script.Parent:WaitForChild("Screen")
+local ItemsFolder = script.Parent:WaitForChild("Items")
 
 local QuizScreen = require(ScreenFolder.Screen)
 local Label = require(ScreenFolder.Label)
+local ScoreLabel = require(ItemsFolder.ScoreLabel)
 
 local QAHandler = require(script.Parent:WaitForChild("QAHandler"))
 
@@ -7044,6 +7176,7 @@ function QuizComponent:render()
         ScreenElement = react.createElement(QuizScreen, {}, {
             Label = react.createElement(Label),
             QA = react.createElement(QAHandler),
+            ScoreLabel = react.createElement(ScoreLabel),
         })
     })
 end
@@ -7051,11 +7184,11 @@ end
 return QuizComponent</string>
           </Properties>
         </Item>
-        <Item class="Folder" referent="87">
+        <Item class="Folder" referent="89">
           <Properties>
             <string name="Name">Screen</string>
           </Properties>
-          <Item class="ModuleScript" referent="88">
+          <Item class="ModuleScript" referent="90">
             <Properties>
               <string name="Name">ButtonArea</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7087,7 +7220,7 @@ end
 return ButtonArea</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="89">
+          <Item class="ModuleScript" referent="91">
             <Properties>
               <string name="Name">Label</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7116,7 +7249,7 @@ end
 return ScreenComponent</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="90">
+          <Item class="ModuleScript" referent="92">
             <Properties>
               <string name="Name">Screen</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7141,15 +7274,15 @@ return ScreenComponent</string>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerScriptService" referent="91">
+  <Item class="ServerScriptService" referent="93">
     <Properties>
       <string name="Name">ServerScriptService</string>
     </Properties>
-    <Item class="Folder" referent="92">
+    <Item class="Folder" referent="94">
       <Properties>
         <string name="Name">Server</string>
       </Properties>
-      <Item class="Script" referent="93">
+      <Item class="Script" referent="95">
         <Properties>
           <string name="Name">Execute</string>
           <token name="RunContext">0</token>
@@ -7166,7 +7299,7 @@ OneFrame.OnStart(Components):andThen(function()
 end)</string>
         </Properties>
       </Item>
-      <Item class="Script" referent="94">
+      <Item class="Script" referent="96">
         <Properties>
           <string name="Name">FreezePlayer</string>
           <token name="RunContext">0</token>
@@ -7181,50 +7314,19 @@ end)</string>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerStorage" referent="95">
+  <Item class="ServerStorage" referent="97">
     <Properties>
       <string name="Name">ServerStorage</string>
     </Properties>
-    <Item class="Folder" referent="96">
+    <Item class="Folder" referent="98">
       <Properties>
         <string name="Name">Shared</string>
       </Properties>
-      <Item class="Folder" referent="97">
+      <Item class="Folder" referent="99">
         <Properties>
           <string name="Name">Components</string>
         </Properties>
-        <Item class="ModuleScript" referent="98">
-          <Properties>
-            <string name="Name">CompileQuizUI</string>
-            <string name="Source">local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Exon = require(ReplicatedStorage:WaitForChild("Packages").exon)
-
-local OneFrame = Exon.oneframe
-local React = Exon.react
-
-local QuizUIFolder = ReplicatedStorage:WaitForChild("Shared"):WaitForChild("QuizUI")
-
-local Component = require(QuizUIFolder.Quiz)
-
-local CompileQuiz = OneFrame.Component.create("Compile Quiz UI")
-
-
-function CompileQuiz:start()
-
-    local Element = React.createElement(Component)
-
-    Players.PlayerAdded:Connect(function(player)
-        player.CharacterAdded:Connect(function()
-            React.mount(Element, player.PlayerGui)
-        end)
-    end)
-end
-
-return CompileQuiz</string>
-          </Properties>
-        </Item>
-        <Item class="ModuleScript" referent="99">
+        <Item class="ModuleScript" referent="100">
           <Properties>
             <string name="Name">ControllersExecute</string>
             <string name="Source"><![CDATA[local HttpService = game:GetService("HttpService")
@@ -7245,7 +7347,83 @@ end
 ]]></string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="100">
+        <Item class="ModuleScript" referent="101">
+          <Properties>
+            <string name="Name">Database</string>
+            <string name="Source">local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local exon = require(ReplicatedStorage.Packages.exon)
+
+local OneFrame = exon.oneframe
+local db = exon.db
+local rednet = exon.rednet
+local util = exon.util
+
+local DatabaseComponent = OneFrame.Component.create("Database Manager")
+
+function DatabaseComponent:preload()
+    self.profiles = {}
+end
+
+function DatabaseComponent:playerAdded(player: Player)
+    local profile = db.LoadProfile("Player Databbase", player.UserId, {
+        Score = 0,
+    })
+
+    profile:Reconcile()
+
+    self.profiles[player.UserId] = profile
+
+    for i, v in pairs(profile.data) do
+        player:SetAttribute(i, v)
+    end
+end
+
+function DatabaseComponent:playerRemoved(player: Player)
+    local profile = self.profiles[player.UserId]
+
+    profile:Save()
+    profile:Close()
+end
+
+function DatabaseComponent:start()
+    for i, v in pairs(Players:GetPlayers()) do
+        self:playerAdded(v)
+    end
+
+    Players.PlayerAdded:Connect(function(player)
+        self:playerAdded(player)
+    end)
+
+    rednet.listen("score_update", function(player, increment)
+        local profile = self.profiles[player.UserId]
+
+        if increment == true then
+            profile.data.Score += 10
+        else
+            if profile.data.Score > 0 then
+                profile.data.Score -= 10
+            end
+        end
+
+        player:SetAttribute("Score", profile.data.Score)
+    end)
+
+end
+
+function DatabaseComponent:closing()
+    util.createLoop(Players:GetPlayers(), function(_, player: Player)
+        local profile = self.profiles[player.UserId]
+
+        profile:Save()
+        profile:Close()
+    end)
+end
+
+return DatabaseComponent</string>
+          </Properties>
+        </Item>
+        <Item class="ModuleScript" referent="102">
           <Properties>
             <string name="Name">QuizDataManager</string>
             <string name="Source">local Players = game:GetService("Players")
@@ -7260,12 +7438,38 @@ local QuizApi = Controllers.GetController("Quiz Api")
 
 local QuizManager = OneFrame.Component.create("Quiz Manager")
 
-function QuizManager:start()
-    Players.PlayerAdded:Connect(function(player)
+function QuizManager:preload()
+    self.isAdded = {}
+end
+
+function QuizManager:playerAdded(player)
+    print("player added")
+    if self.isAdded[player.UserId] == nil then
+        self.isAdded[player.UserId] = true
         QuizApi:Get(10, "easy", "multiple")
 
-        task.wait(5)
-        local QuizFinished = RedNet:GetClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
+        task.wait(2)
+        RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
+        print("sent the data")
+    end
+end
+
+function QuizManager:playerRemoved(player)
+    self.isAdded[player.UserId] = nil
+end
+
+function QuizManager:start()
+
+    for i, v in pairs(Players:GetPlayers()) do
+        self:playerAdded(v)
+    end
+
+    Players.PlayerAdded:Connect(function(player)
+        self:playerAdded(player)
+    end)
+
+    Players.PlayerRemoving:Connect(function(player)
+        self:playerRemoved(player)
     end)
 
 end
@@ -7275,11 +7479,11 @@ return QuizManager</string>
           </Properties>
         </Item>
       </Item>
-      <Item class="Folder" referent="101">
+      <Item class="Folder" referent="103">
         <Properties>
           <string name="Name">Controllers</string>
         </Properties>
-        <Item class="ModuleScript" referent="102">
+        <Item class="ModuleScript" referent="104">
           <Properties>
             <string name="Name">QuizApi</string>
             <string name="Source">local HttpService = game:GetService("HttpService")
@@ -7325,19 +7529,19 @@ return QuizApi</string>
       </Item>
     </Item>
   </Item>
-  <Item class="StarterPlayer" referent="103">
+  <Item class="StarterPlayer" referent="105">
     <Properties>
       <string name="Name">StarterPlayer</string>
     </Properties>
-    <Item class="StarterPlayerScripts" referent="104">
+    <Item class="StarterPlayerScripts" referent="106">
       <Properties>
         <string name="Name">StarterPlayerScripts</string>
       </Properties>
-      <Item class="Folder" referent="105">
+      <Item class="Folder" referent="107">
         <Properties>
           <string name="Name">Client</string>
         </Properties>
-        <Item class="LocalScript" referent="106">
+        <Item class="LocalScript" referent="108">
           <Properties>
             <string name="Name">Execute</string>
             <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")

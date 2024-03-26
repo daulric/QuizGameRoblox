@@ -38,7 +38,6 @@ function QAHandler:didMount()
 
         for i = 1, #results do
             local Question_Queue = results[i]
-            print(Question_Queue)
 
             self.updateQuestion(Question_Queue.question)
             table.insert(tempStore, Question_Queue.correct_answer)
@@ -52,10 +51,17 @@ function QAHandler:didMount()
                 local element = react.createElement(OptionButton, {
                     Text = tempStore[chosenNum],
                     mouseClicked = function(element)
+
+                        if Answered == true then
+                            return
+                        end
+
                         if element.Text == Question_Queue.correct_answer then
                             element.BackgroundColor3 = Color3.fromRGB(30, 70, 9)
+                            rednet:FireServer("score_update", true)
                         else
                             element.BackgroundColor3 = Color3.fromRGB(84, 11, 11)
+                            rednet:FireServer("score_update", false)
                         end
 
                         Answered = true
@@ -74,9 +80,15 @@ function QAHandler:didMount()
                 task.wait(1)
             until (Answered == true)
 
+            task.wait(1)
             Answered = false
             table.clear(tempStore)
             table.clear(buttons)
+
+            if i == #results then
+                rednet:FireServer("resend_quiz")
+            end
+
         end
     end)
 

@@ -6,9 +6,11 @@ local QuizComponent = react.Component:extend("QuizUI")
 
 -- Components
 local ScreenFolder = script.Parent:WaitForChild("Screen")
+local ItemsFolder = script.Parent:WaitForChild("Items")
 
 local QuizScreen = require(ScreenFolder.Screen)
 local Label = require(ScreenFolder.Label)
+local ScoreLabel = require(ItemsFolder.ScoreLabel)
 
 local QAHandler = require(script.Parent:WaitForChild("QAHandler"))
 
@@ -26,6 +28,7 @@ function QuizComponent:render()
         ScreenElement = react.createElement(QuizScreen, {}, {
             Label = react.createElement(Label),
             QA = react.createElement(QAHandler),
+            ScoreLabel = react.createElement(ScoreLabel),
         })
     })
 end

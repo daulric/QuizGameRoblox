@@ -14,6 +14,7 @@ function QuizQuestionComponent:render()
         Position = UDim2.fromScale(0.364, 0.15),
         Size = UDim2.fromScale(0.316,0.143),
         Text = self.props.Question,
+        RichText = true,
         BackgroundTransparency = 1,
         TextColor3 = Color3.fromRGB(255, 255, 255),
         TextScaled = true,
