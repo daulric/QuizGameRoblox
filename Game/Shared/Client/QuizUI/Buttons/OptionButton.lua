@@ -5,7 +5,11 @@ local react = exon.react
 local OptionButtonComponent = react.Component:extend("Option Button")
 
 function OptionButtonComponent:init()
-    --self.text, self.updateText = react.createBinding("")
+    self.clickSound = react.createRef()
+end
+
+function OptionButtonComponent:didMount()
+    self.sound = self.clickSound:getValue()
 end
 
 function OptionButtonComponent:render()
@@ -19,10 +23,21 @@ function OptionButtonComponent:render()
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Size = UDim2.new(0.5, 0, 0.5, 0),
         Font = Enum.Font.Cartoon,
-        [react.Event.MouseButton1Click] = self.props.mouseClicked,
+        [react.Event.MouseButton1Click] = function(element)
+            self.sound:Play()
+            self.props.mouseClicked(element)
+        end,
     }, {
+
+        Children = react.createFragment(self.props[react.Children]),
+
         UICorner = react.createElement("UICorner", {
             CornerRadius = UDim.new(0, 5),
+        }),
+
+        Sound = react.createElement("Sound", {
+            SoundId = "rbxassetid://5393362166",
+            [react.Ref] = self.clickSound,
         }),
 
         UIRatio = react.createElement("UIAspectRatioConstraint", {
@@ -31,6 +46,5 @@ function OptionButtonComponent:render()
         })
     })
 end
-
 
 return OptionButtonComponent

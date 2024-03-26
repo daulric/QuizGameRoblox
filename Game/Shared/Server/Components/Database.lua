@@ -14,7 +14,7 @@ function DatabaseComponent:preload()
 end
 
 function DatabaseComponent:playerAdded(player: Player)
-    local profile = db.LoadProfile("Player Databbase", player.UserId, {
+    local profile = db.LoadProfile("Player Database", player.UserId, {
         Score = 0,
     })
 

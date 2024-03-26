@@ -6935,7 +6935,11 @@ local react = exon.react
 local OptionButtonComponent = react.Component:extend("Option Button")
 
 function OptionButtonComponent:init()
-    --self.text, self.updateText = react.createBinding("")
+    self.clickSound = react.createRef()
+end
+
+function OptionButtonComponent:didMount()
+    self.sound = self.clickSound:getValue()
 end
 
 function OptionButtonComponent:render()
@@ -6943,20 +6947,35 @@ function OptionButtonComponent:render()
     return react.createElement("TextButton", {
         Name = "Option Button",
         Text = self.props.Text,
+        RichText = true,
         TextScaled = true,
         BackgroundColor3 = Color3.fromRGB(46, 46, 46),
         TextColor3 = Color3.fromRGB(255, 255, 255),
         Size = UDim2.new(0.5, 0, 0.5, 0),
         Font = Enum.Font.Cartoon,
-        [react.Event.MouseButton1Click] = self.props.mouseClicked,
-
+        [react.Event.MouseButton1Click] = function(element)
+            self.sound:Play()
+            self.props.mouseClicked(element)
+        end,
     }, {
+
+        Children = react.createFragment(self.props[react.Children]),
+
         UICorner = react.createElement("UICorner", {
             CornerRadius = UDim.new(0, 5),
+        }),
+
+        Sound = react.createElement("Sound", {
+            SoundId = "rbxassetid://5393362166",
+            [react.Ref] = self.clickSound,
+        }),
+
+        UIRatio = react.createElement("UIAspectRatioConstraint", {
+            AspectRatio = 5,
+            AspectType = Enum.AspectType.ScaleWithParentSize,
         })
     })
 end
-
 
 return OptionButtonComponent</string>
             </Properties>
@@ -6985,6 +7004,7 @@ function QuizQuestionComponent:render()
         Position = UDim2.fromScale(0.364, 0.15),
         Size = UDim2.fromScale(0.316,0.143),
         Text = self.props.Question,
+        RichText = true,
         BackgroundTransparency = 1,
         TextColor3 = Color3.fromRGB(255, 255, 255),
         TextScaled = true,
@@ -7026,13 +7046,20 @@ function ScoreLabelComponent:render()
     return react.createElement("TextLabel", {
         Name = "Score Label",
         Text = self.Score:map(function(value)
-            return "Score: "..0
+            return "Score: "..value
         end),
 
-        Size = UDim2.fromScale(0.5, 0.5),
+        Size = UDim2.fromScale(0.2, 0.065),
+        Position = UDim2.fromScale(0.748, 0),
+        Font = Enum.Font.Cartoon,
+        TextColor3 = Color3.fromRGB(255, 255, 255),
         BackgroundTransparency = 1,
         TextScaled = true,
-        
+
+    }, {
+        UIRatio = react.createElement("UIAspectRatioConstraint", {
+            AspectRatio = 5,
+        })
     })
 end
 
@@ -7093,19 +7120,36 @@ function QAHandler:didMount()
 
             for i = 1, #tempStore do
                 local chosenNum = math.random(1, #tempStore)
+                local soundRef = react.createRef()
                 local element = react.createElement(OptionButton, {
                     Text = tempStore[chosenNum],
                     mouseClicked = function(element)
+                        local soundPlayer = soundRef:getValue()
+
+                        if Answered == true then
+                            return
+                        end
+
                         if element.Text == Question_Queue.correct_answer then
                             element.BackgroundColor3 = Color3.fromRGB(30, 70, 9)
                             rednet:FireServer("score_update", true)
+                            soundPlayer.SoundId = "rbxassetid://9060788686"
+                            soundPlayer:Play()
                         else
                             element.BackgroundColor3 = Color3.fromRGB(84, 11, 11)
                             rednet:FireServer("score_update", false)
+                            soundPlayer.SoundId = "rbxassetid://1637297605"
+                            soundPlayer:Play()
                         end
 
                         Answered = true
                     end
+                }, {
+                    Sound = react.createElement("Sound", {
+                        Name = "Success/Failure",
+                        SoundId = "",
+                        [react.Ref] = soundRef,
+                    })
                 })
 
                 table.insert(buttons, element)
@@ -7120,9 +7164,15 @@ function QAHandler:didMount()
                 task.wait(1)
             until (Answered == true)
 
+            task.wait(2)
             Answered = false
             table.clear(tempStore)
             table.clear(buttons)
+
+            if i == #results then
+                rednet:FireServer("resend_quiz")
+            end
+
         end
     end)
 
@@ -7200,12 +7250,17 @@ local ButtonArea = react.Component:extend("Button Area")
 function ButtonArea:render()
     return react.createElement("Frame", {
         Name = "Button Area",
-        Size = UDim2.fromScale(0.5, 0.5),
+        Size = UDim2.fromScale(0.5, 0.4),
         Position = UDim2.fromScale(0.3, 0.4),
+        BackgroundColor3 = Color3.fromRGB(61, 61, 61)
     }, self.props[react.Children],  {
 
         UICorner = react.createElement("UICorner", {
             CornerRadius = UDim.new(0, 4),
+        }),
+
+        UIAspect = react.createElement("UIAspectRatioConstraint", {
+            AspectRatio = 3
         }),
 
         UIGridLayout = react.createElement("UIGridLayout", {
@@ -7372,21 +7427,27 @@ function DatabaseComponent:playerAdded(player: Player)
 
     profile:Reconcile()
 
+    profile.saving:Connect(function()
+        print("Saving Data")
+    end)
+
     self.profiles[player.UserId] = profile
 
     for i, v in pairs(profile.data) do
         player:SetAttribute(i, v)
     end
+
+    profile:AutoSave()
 end
 
 function DatabaseComponent:playerRemoved(player: Player)
     local profile = self.profiles[player.UserId]
-
     profile:Save()
     profile:Close()
 end
 
 function DatabaseComponent:start()
+
     for i, v in pairs(Players:GetPlayers()) do
         self:playerAdded(v)
     end
@@ -7412,11 +7473,8 @@ function DatabaseComponent:start()
 end
 
 function DatabaseComponent:closing()
-    util.createLoop(Players:GetPlayers(), function(_, player: Player)
-        local profile = self.profiles[player.UserId]
-
-        profile:Save()
-        profile:Close()
+    util.iterate(Players:GetPlayers(), function(_, player: Player)
+        self:playerRemoved(player)
     end)
 end
 
@@ -7440,16 +7498,35 @@ local QuizManager = OneFrame.Component.create("Quiz Manager")
 
 function QuizManager:preload()
     self.isAdded = {}
+
+    self.mode = {
+        [1] = "easy",
+        [2] = "medium",
+        [3] = "hard",
+    }
+
+    self.count = 0
+end
+
+function QuizManager:GetQuiz(player: Player)
+
+    self.count += 1
+
+    if self.count > #self.mode then
+        self.count = 1
+    end
+
+    QuizApi:Get(20, self.mode[self.count], "multiple")
+    task.wait()
+    RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
 end
 
 function QuizManager:playerAdded(player)
     print("player added")
     if self.isAdded[player.UserId] == nil then
         self.isAdded[player.UserId] = true
-        QuizApi:Get(10, "easy", "multiple")
-
         task.wait(2)
-        RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
+        self:GetQuiz(player)
         print("sent the data")
     end
 end
@@ -7463,6 +7540,10 @@ function QuizManager:start()
     for i, v in pairs(Players:GetPlayers()) do
         self:playerAdded(v)
     end
+
+    RedNet.listen("resend_quiz", function(player)
+        self:GetQuiz(player)
+    end)
 
     Players.PlayerAdded:Connect(function(player)
         self:playerAdded(player)
@@ -7513,8 +7594,10 @@ end
 -- Getting Info using the API
 function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType)
     local url = `https://opentdb.com/api.php?amount={amount}&amp;category=18&amp;difficulty={difficulty}&amp;type={type}`
-    local urlData = HttpService:GetAsync(url)
+    local urlData = HttpService:GetAsync(url, true)
     local info = HttpService:JSONDecode(urlData)
+
+    table.clear(self.Info.QuizInfo)
 
     for i, v in pairs(info) do
         self.Info.QuizInfo[i] = v

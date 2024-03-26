@@ -48,9 +48,11 @@ function QAHandler:didMount()
 
             for i = 1, #tempStore do
                 local chosenNum = math.random(1, #tempStore)
+                local soundRef = react.createRef()
                 local element = react.createElement(OptionButton, {
                     Text = tempStore[chosenNum],
                     mouseClicked = function(element)
+                        local soundPlayer = soundRef:getValue()
 
                         if Answered == true then
                             return
@@ -59,13 +61,23 @@ function QAHandler:didMount()
                         if element.Text == Question_Queue.correct_answer then
                             element.BackgroundColor3 = Color3.fromRGB(30, 70, 9)
                             rednet:FireServer("score_update", true)
+                            soundPlayer.SoundId = "rbxassetid://9060788686"
+                            soundPlayer:Play()
                         else
                             element.BackgroundColor3 = Color3.fromRGB(84, 11, 11)
                             rednet:FireServer("score_update", false)
+                            soundPlayer.SoundId = "rbxassetid://1637297605"
+                            soundPlayer:Play()
                         end
 
                         Answered = true
                     end
+                }, {
+                    Sound = react.createElement("Sound", {
+                        Name = "Success/Failure",
+                        SoundId = "",
+                        [react.Ref] = soundRef,
+                    })
                 })
 
                 table.insert(buttons, element)
@@ -80,7 +92,7 @@ function QAHandler:didMount()
                 task.wait(1)
             until (Answered == true)
 
-            task.wait(1)
+            task.wait(2)
             Answered = false
             table.clear(tempStore)
             table.clear(buttons)

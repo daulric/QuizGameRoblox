@@ -12,18 +12,37 @@ local QuizManager = OneFrame.Component.create("Quiz Manager")
 
 function QuizManager:preload()
     self.isAdded = {}
+
+    self.mode = {
+        [1] = "easy",
+        [2] = "medium",
+        [3] = "hard",
+    }
+
+    self.count = 0
 end
 
 function QuizManager:GetQuiz(player: Player)
-    QuizApi:Get(5, "easy", "multiple")
+
+    self.count += 1
+
+    if self.count > #self.mode then
+        self.count = 1
+    end
+
+    QuizApi:Get(20, self.mode[self.count], "multiple")
     task.wait()
     RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
 end
 
-function QuizManager:playerAdded(player)
+function QuizManager:playerAdded(player: Player)
     print("player added")
     if self.isAdded[player.UserId] == nil then
+        repeat
+            task.wait(1)
+        until player.CharacterAdded:Wait()
         self.isAdded[player.UserId] = true
+        task.wait(2)
         self:GetQuiz(player)
         print("sent the data")
     end

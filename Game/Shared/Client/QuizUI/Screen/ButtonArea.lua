@@ -7,12 +7,17 @@ local ButtonArea = react.Component:extend("Button Area")
 function ButtonArea:render()
     return react.createElement("Frame", {
         Name = "Button Area",
-        Size = UDim2.fromScale(0.5, 0.5),
+        Size = UDim2.fromScale(0.5, 0.4),
         Position = UDim2.fromScale(0.3, 0.4),
+        BackgroundColor3 = Color3.fromRGB(61, 61, 61)
     }, self.props[react.Children],  {
 
         UICorner = react.createElement("UICorner", {
             CornerRadius = UDim.new(0, 4),
+        }),
+
+        UIAspect = react.createElement("UIAspectRatioConstraint", {
+            AspectRatio = 3
         }),
 
         UIGridLayout = react.createElement("UIGridLayout", {
