@@ -1,21 +1,27 @@
 <roblox version="4">
-  <Item class="ReplicatedStorage" referent="0">
+  <Item class="HttpService" referent="0">
+    <Properties>
+      <string name="Name">HttpService</string>
+      <bool name="HttpEnabled">true</bool>
+    </Properties>
+  </Item>
+  <Item class="ReplicatedStorage" referent="1">
     <Properties>
       <string name="Name">ReplicatedStorage</string>
     </Properties>
-    <Item class="Folder" referent="1">
+    <Item class="Folder" referent="2">
       <Properties>
         <string name="Name">Packages</string>
       </Properties>
-      <Item class="Folder" referent="2">
+      <Item class="Folder" referent="3">
         <Properties>
           <string name="Name">_Index</string>
         </Properties>
-        <Item class="Folder" referent="3">
+        <Item class="Folder" referent="4">
           <Properties>
-            <string name="Name">daulric_exon@0.0.48</string>
+            <string name="Name">daulric_exon@0.0.49</string>
           </Properties>
-          <Item class="ModuleScript" referent="4">
+          <Item class="ModuleScript" referent="5">
             <Properties>
               <string name="Name">exon</string>
               <string name="Source">local lockTable = require(script:WaitForChild("lockTable"))
@@ -62,7 +68,7 @@ lockTable(exon, "exon", {
 
 return exon</string>
             </Properties>
-            <Item class="ModuleScript" referent="5">
+            <Item class="ModuleScript" referent="6">
               <Properties>
                 <string name="Name">import</string>
                 <string name="Source">function import(target)
@@ -117,7 +123,7 @@ end
 return import</string>
               </Properties>
             </Item>
-            <Item class="ModuleScript" referent="6">
+            <Item class="ModuleScript" referent="7">
               <Properties>
                 <string name="Name">lockTable</string>
                 <string name="Source">return function (data, id, messages)
@@ -143,11 +149,11 @@ return import</string>
 end</string>
               </Properties>
             </Item>
-            <Item class="Folder" referent="7">
+            <Item class="Folder" referent="8">
               <Properties>
                 <string name="Name">addons</string>
               </Properties>
-              <Item class="ModuleScript" referent="8">
+              <Item class="ModuleScript" referent="9">
                 <Properties>
                   <string name="Name">createReactHook</string>
                   <string name="Source">local differentDependencies = require(script:WaitForChild("differentDependencies"))
@@ -281,7 +287,7 @@ end
 
 return createReactHook</string>
                 </Properties>
-                <Item class="ModuleScript" referent="9">
+                <Item class="ModuleScript" referent="10">
                   <Properties>
                     <string name="Name">createUseBinding</string>
                     <string name="Source">return function (react, useValue)
@@ -291,7 +297,7 @@ return createReactHook</string>
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="10">
+                <Item class="ModuleScript" referent="11">
                   <Properties>
                     <string name="Name">createUseCallback</string>
                     <string name="Source">return function (useMemo)
@@ -303,7 +309,7 @@ end</string>
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="11">
+                <Item class="ModuleScript" referent="12">
                   <Properties>
                     <string name="Name">createUseContext</string>
                     <string name="Source">return function (component, useEffect, useState, useMemo)
@@ -359,7 +365,7 @@ end</string>
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="12">
+                <Item class="ModuleScript" referent="13">
                   <Properties>
                     <string name="Name">createUseEffect</string>
                     <string name="Source">return function(component)
@@ -375,7 +381,7 @@ end</string>
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="13">
+                <Item class="ModuleScript" referent="14">
                   <Properties>
                     <string name="Name">createUseMemo</string>
                     <string name="Source">local differentDependencies = require(script.Parent:WaitForChild("differentDependencies"))
@@ -402,7 +408,7 @@ return function(useValue)
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="14">
+                <Item class="ModuleScript" referent="15">
                   <Properties>
                     <string name="Name">createUseState</string>
                     <string name="Source">local NONE = {}
@@ -480,7 +486,7 @@ return function(component)
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="15">
+                <Item class="ModuleScript" referent="16">
                   <Properties>
                     <string name="Name">createUseValue</string>
                     <string name="Source">return function (component)
@@ -501,7 +507,7 @@ end</string>
 end</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="16">
+                <Item class="ModuleScript" referent="17">
                   <Properties>
                     <string name="Name">differentDependencies</string>
                     <string name="Source">return function(dependencies, lastDependencies)
@@ -528,7 +534,7 @@ end</string>
                   </Properties>
                 </Item>
               </Item>
-              <Item class="ModuleScript" referent="17">
+              <Item class="ModuleScript" referent="18">
                 <Properties>
                   <string name="Name">input</string>
                   <string name="Source">return {
@@ -536,7 +542,7 @@ end</string>
     Mouse = require(script:WaitForChild("Mouse")),
 }</string>
                 </Properties>
-                <Item class="ModuleScript" referent="18">
+                <Item class="ModuleScript" referent="19">
                   <Properties>
                     <string name="Name">Keyboard</string>
                     <string name="Source">local Keyboard = {}
@@ -642,7 +648,7 @@ end
 return Keyboard</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="19">
+                <Item class="ModuleScript" referent="20">
                   <Properties>
                     <string name="Name">Mouse</string>
                     <string name="Source">local Mouse = {}
@@ -763,7 +769,7 @@ end
 return Mouse</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="20">
+                <Item class="ModuleScript" referent="21">
                   <Properties>
                     <string name="Name">rednet</string>
                     <string name="Source">local RunService = game:GetService("RunService")
@@ -882,7 +888,7 @@ RedNet.createBindableSignal = require(script:WaitForChild("BindableSignal"))
 
 return RedNet</string>
                   </Properties>
-                  <Item class="ModuleScript" referent="21">
+                  <Item class="ModuleScript" referent="22">
                     <Properties>
                       <string name="Name">BindableSignal</string>
                       <string name="Source">local BSignal = {}
@@ -932,7 +938,7 @@ end
 return createBindableSignal</string>
                     </Properties>
                   </Item>
-                  <Item class="ModuleScript" referent="22">
+                  <Item class="ModuleScript" referent="23">
                     <Properties>
                       <string name="Name">RemoteSignal</string>
                       <string name="Source">local Signal = {}
@@ -996,7 +1002,7 @@ return createSignal</string>
                     </Properties>
                   </Item>
                 </Item>
-                <Item class="ModuleScript" referent="23">
+                <Item class="ModuleScript" referent="24">
                   <Properties>
                     <string name="Name">tidy</string>
                     <string name="Source">local Tidy = {}
@@ -1128,7 +1134,7 @@ return Tidy</string>
                   </Properties>
                 </Item>
               </Item>
-              <Item class="ModuleScript" referent="24">
+              <Item class="ModuleScript" referent="25">
                 <Properties>
                   <string name="Name">tidy</string>
                   <string name="Source">local Tidy = {}
@@ -1260,7 +1266,7 @@ return Tidy</string>
                 </Properties>
               </Item>
             </Item>
-            <Item class="ModuleScript" referent="25">
+            <Item class="ModuleScript" referent="26">
               <Properties>
                 <string name="Name">controllers</string>
                 <string name="Source">local Controllers = {}
@@ -1305,7 +1311,7 @@ end
 
 return Controllers</string>
               </Properties>
-              <Item class="ModuleScript" referent="26">
+              <Item class="ModuleScript" referent="27">
                 <Properties>
                   <string name="Name">symbol</string>
                   <string name="Source">local Symbol = {}
@@ -1324,7 +1330,7 @@ return Symbol</string>
                 </Properties>
               </Item>
             </Item>
-            <Item class="ModuleScript" referent="27">
+            <Item class="ModuleScript" referent="28">
               <Properties>
                 <string name="Name">db</string>
                 <string name="Source">local DB = {}
@@ -1540,7 +1546,7 @@ end
 
 return DB</string>
               </Properties>
-              <Item class="ModuleScript" referent="28">
+              <Item class="ModuleScript" referent="29">
                 <Properties>
                   <string name="Name">rednet</string>
                   <string name="Source">local RunService = game:GetService("RunService")
@@ -1659,7 +1665,7 @@ RedNet.createBindableSignal = require(script:WaitForChild("BindableSignal"))
 
 return RedNet</string>
                 </Properties>
-                <Item class="ModuleScript" referent="29">
+                <Item class="ModuleScript" referent="30">
                   <Properties>
                     <string name="Name">BindableSignal</string>
                     <string name="Source">local BSignal = {}
@@ -1709,7 +1715,7 @@ end
 return createBindableSignal</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="30">
+                <Item class="ModuleScript" referent="31">
                   <Properties>
                     <string name="Name">RemoteSignal</string>
                     <string name="Source">local Signal = {}
@@ -1773,7 +1779,7 @@ return createSignal</string>
                   </Properties>
                 </Item>
               </Item>
-              <Item class="ModuleScript" referent="31">
+              <Item class="ModuleScript" referent="32">
                 <Properties>
                   <string name="Name">tidy</string>
                   <string name="Source">local Tidy = {}
@@ -1905,7 +1911,7 @@ return Tidy</string>
                 </Properties>
               </Item>
             </Item>
-            <Item class="ModuleScript" referent="32">
+            <Item class="ModuleScript" referent="33">
               <Properties>
                 <string name="Name">oneframe</string>
                 <string name="Source">local Framework = require(script:WaitForChild("Framework"))
@@ -1921,7 +1927,7 @@ local OneFrame = {
 compile(OneFrame, "OneFrame")
 return OneFrame</string>
               </Properties>
-              <Item class="ModuleScript" referent="33">
+              <Item class="ModuleScript" referent="34">
                 <Properties>
                   <string name="Name">Component</string>
                   <string name="Source">local Component = {}
@@ -1955,7 +1961,7 @@ end
 return Component</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="34">
+              <Item class="ModuleScript" referent="35">
                 <Properties>
                   <string name="Name">Framework</string>
                   <string name="Source">local Tools = script.Parent:WaitForChild("Tools")
@@ -2124,7 +2130,7 @@ end
 return MainFrame</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="35">
+              <Item class="ModuleScript" referent="36">
                 <Properties>
                   <string name="Name">Mark</string>
                   <string name="Source">local Symbol = require(script.Parent:WaitForChild("symbol"))
@@ -2132,11 +2138,11 @@ return MainFrame</string>
 return Symbol.assign("Marker")</string>
                 </Properties>
               </Item>
-              <Item class="Folder" referent="36">
+              <Item class="Folder" referent="37">
                 <Properties>
                   <string name="Name">Tools</string>
                 </Properties>
-                <Item class="ModuleScript" referent="37">
+                <Item class="ModuleScript" referent="38">
                   <Properties>
                     <string name="Name">Promise</string>
                     <string name="Source"><![CDATA[--[[
@@ -4211,7 +4217,7 @@ return Promise
                   </Properties>
                 </Item>
               </Item>
-              <Item class="ModuleScript" referent="38">
+              <Item class="ModuleScript" referent="39">
                 <Properties>
                   <string name="Name">freeze</string>
                   <string name="Source">return function(data: {[any]: any}, name)
@@ -4247,7 +4253,7 @@ return Promise
 end</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="39">
+              <Item class="ModuleScript" referent="40">
                 <Properties>
                   <string name="Name">symbol</string>
                   <string name="Source">local Symbol = {}
@@ -4265,7 +4271,7 @@ end
 return Symbol</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="40">
+              <Item class="ModuleScript" referent="41">
                 <Properties>
                   <string name="Name">tidy</string>
                   <string name="Source">local Tidy = {}
@@ -4397,7 +4403,7 @@ return Tidy</string>
                 </Properties>
               </Item>
             </Item>
-            <Item class="ModuleScript" referent="41">
+            <Item class="ModuleScript" referent="42">
               <Properties>
                 <string name="Name">react</string>
                 <string name="Source">-- \\ Utils // --
@@ -4452,7 +4458,7 @@ local react = {
 freeze(react, "react")
 return react</string>
               </Properties>
-              <Item class="ModuleScript" referent="42">
+              <Item class="ModuleScript" referent="43">
                 <Properties>
                   <string name="Name">Binding</string>
                   <string name="Source">local rednet = require(script.Parent:WaitForChild("rednet"))
@@ -4595,7 +4601,7 @@ end
 return BindingInternalApi</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="43">
+              <Item class="ModuleScript" referent="44">
                 <Properties>
                   <string name="Name">Component</string>
                   <string name="Source">local markers = script.Parent:WaitForChild("markers")
@@ -4993,7 +4999,7 @@ end
 return Component</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="44">
+              <Item class="ModuleScript" referent="45">
                 <Properties>
                   <string name="Name">Reconciler</string>
                   <string name="Source">local markers = script.Parent:WaitForChild("markers")
@@ -5290,7 +5296,7 @@ end
 return createReconciler</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="45">
+              <Item class="ModuleScript" referent="46">
                 <Properties>
                   <string name="Name">Renderer</string>
                   <string name="Source">local renderer = {}
@@ -5553,7 +5559,7 @@ end
 return renderer</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="46">
+              <Item class="ModuleScript" referent="47">
                 <Properties>
                   <string name="Name">SingleEventManager</string>
                   <string name="Source">local CHANGE_PREFIX = "Change."
@@ -5700,7 +5706,7 @@ end
 return SingleEventManager</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="47">
+              <Item class="ModuleScript" referent="48">
                 <Properties>
                   <string name="Name">assign</string>
                   <string name="Source">local function assign(target, ...)
@@ -5721,7 +5727,7 @@ end
 return assign</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="48">
+              <Item class="ModuleScript" referent="49">
                 <Properties>
                   <string name="Name">getDefaultProperty</string>
                   <string name="Source">local Symbol = require(script.Parent:WaitForChild("symbol"))
@@ -5770,11 +5776,11 @@ end
 return getDefaultInstanceProperty</string>
                 </Properties>
               </Item>
-              <Item class="Folder" referent="49">
+              <Item class="Folder" referent="50">
                 <Properties>
                   <string name="Name">markers</string>
                 </Properties>
-                <Item class="ModuleScript" referent="50">
+                <Item class="ModuleScript" referent="51">
                   <Properties>
                     <string name="Name">Children</string>
                     <string name="Source">local Symbol = require(script.Parent.Parent:WaitForChild("symbol"))
@@ -5784,7 +5790,7 @@ local Children = Symbol.assign("Children")
 return Children</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="51">
+                <Item class="ModuleScript" referent="52">
                   <Properties>
                     <string name="Name">ElementType</string>
                     <string name="Source">local ElementTypeInternal = {}
@@ -5914,7 +5920,7 @@ getmetatable(ElementType).__index = ElementTypeInternal
 return ElementType</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="52">
+                <Item class="ModuleScript" referent="53">
                   <Properties>
                     <string name="Name">Gateway</string>
                     <string name="Source">local Symbol = require(script.Parent.Parent:WaitForChild("symbol"))
@@ -5924,7 +5930,7 @@ local Gateway = Symbol.assign("Gateway")
 return Gateway</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="53">
+                <Item class="ModuleScript" referent="54">
                   <Properties>
                     <string name="Name">Lifecycle</string>
                     <string name="Source">local Symbol = require(script.Parent.Parent:WaitForChild("symbol"))
@@ -5947,7 +5953,7 @@ return {
 }</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="54">
+                <Item class="ModuleScript" referent="55">
                   <Properties>
                     <string name="Name">Ref</string>
                     <string name="Source">local Symbol = require(script.Parent.Parent:WaitForChild("symbol"))
@@ -5957,7 +5963,7 @@ local ref = Symbol.assign("Ref")
 return ref</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="55">
+                <Item class="ModuleScript" referent="56">
                   <Properties>
                     <string name="Name">Type</string>
                     <string name="Source">local Symbol = require(script.Parent.Parent:WaitForChild("symbol"))
@@ -5971,7 +5977,7 @@ return {
 }</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="56">
+                <Item class="ModuleScript" referent="57">
                   <Properties>
                     <string name="Name">data</string>
                     <string name="Source">local data = {}
@@ -5993,7 +5999,7 @@ setTable(data.AttributeChange, "react.Attribute.Change", Type.AttributeChange, t
 
 return data</string>
                   </Properties>
-                  <Item class="ModuleScript" referent="57">
+                  <Item class="ModuleScript" referent="58">
                     <Properties>
                       <string name="Name">setTable</string>
                       <string name="Source">return function (Table, message, PropertyType, isEvent)
@@ -6018,11 +6024,11 @@ end</string>
                   </Item>
                 </Item>
               </Item>
-              <Item class="Folder" referent="58">
+              <Item class="Folder" referent="59">
                 <Properties>
                   <string name="Name">nodes</string>
                 </Properties>
-                <Item class="ModuleScript" referent="59">
+                <Item class="ModuleScript" referent="60">
                   <Properties>
                     <string name="Name">createContext</string>
                     <string name="Source">local Component = require(script.Parent.Parent:WaitForChild("Component"))
@@ -6144,7 +6150,7 @@ end
 return createContext</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="60">
+                <Item class="ModuleScript" referent="61">
                   <Properties>
                     <string name="Name">createElement</string>
                     <string name="Source">local markers = script.Parent.Parent:WaitForChild("markers")
@@ -6152,33 +6158,10 @@ return createContext</string>
 local ElementType = require(markers.ElementType)
 local Children = require(markers.Children)
 
-function extractData(ProccessChildren, children)
-
-
-    if type(ProccessChildren) ~= "table" then return end
-
-    for i, child in pairs(ProccessChildren) do
-        if type(child) == "table" then
-            if child.Type ~= nil then
-                children[i] = child
-            else
-                extractData(child, children)
-            end
-        end
-    end
-
-end
-
-function createElement(class, props, ...: any)
-
-    local processChildren = {...}
-    local children = {}
-
+function createElement(class, props, children)
     props = props or {}
 
-    if processChildren ~= nil then
-
-        extractData(processChildren, children)
+    if children ~= nil then
 
         if props[Children] ~= nil then
             warn("there is already children in the props")
@@ -6201,7 +6184,7 @@ end
 return createElement</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="61">
+                <Item class="ModuleScript" referent="62">
                   <Properties>
                     <string name="Name">createFragment</string>
                     <string name="Source">local markers = script.Parent.Parent:WaitForChild("markers")
@@ -6217,7 +6200,7 @@ end
 return createFragment</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="62">
+                <Item class="ModuleScript" referent="63">
                   <Properties>
                     <string name="Name">createRef</string>
                     <string name="Source">local Binding = require(script.Parent.Parent:WaitForChild("Binding"))
@@ -6254,7 +6237,7 @@ end
 return createRef</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="63">
+                <Item class="ModuleScript" referent="64">
                   <Properties>
                     <string name="Name">forwardRef</string>
                     <string name="Source">local Ref = require(script.Parent.Parent:WaitForChild("markers").Ref)
@@ -6273,7 +6256,7 @@ return forwardRef</string>
                   </Properties>
                 </Item>
               </Item>
-              <Item class="ModuleScript" referent="64">
+              <Item class="ModuleScript" referent="65">
                 <Properties>
                   <string name="Name">freeze</string>
                   <string name="Source">return function(data: {[any]: any}, name)
@@ -6309,7 +6292,7 @@ return forwardRef</string>
 end</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="65">
+              <Item class="ModuleScript" referent="66">
                 <Properties>
                   <string name="Name">rednet</string>
                   <string name="Source">local RunService = game:GetService("RunService")
@@ -6428,7 +6411,7 @@ RedNet.createBindableSignal = require(script:WaitForChild("BindableSignal"))
 
 return RedNet</string>
                 </Properties>
-                <Item class="ModuleScript" referent="66">
+                <Item class="ModuleScript" referent="67">
                   <Properties>
                     <string name="Name">BindableSignal</string>
                     <string name="Source">local BSignal = {}
@@ -6478,7 +6461,7 @@ end
 return createBindableSignal</string>
                   </Properties>
                 </Item>
-                <Item class="ModuleScript" referent="67">
+                <Item class="ModuleScript" referent="68">
                   <Properties>
                     <string name="Name">RemoteSignal</string>
                     <string name="Source">local Signal = {}
@@ -6542,7 +6525,7 @@ return createSignal</string>
                   </Properties>
                 </Item>
               </Item>
-              <Item class="ModuleScript" referent="68">
+              <Item class="ModuleScript" referent="69">
                 <Properties>
                   <string name="Name">symbol</string>
                   <string name="Source">local Symbol = {}
@@ -6561,7 +6544,7 @@ return Symbol</string>
                 </Properties>
               </Item>
             </Item>
-            <Item class="ModuleScript" referent="69">
+            <Item class="ModuleScript" referent="70">
               <Properties>
                 <string name="Name">rednet</string>
                 <string name="Source">local RunService = game:GetService("RunService")
@@ -6680,7 +6663,7 @@ RedNet.createBindableSignal = require(script:WaitForChild("BindableSignal"))
 
 return RedNet</string>
               </Properties>
-              <Item class="ModuleScript" referent="70">
+              <Item class="ModuleScript" referent="71">
                 <Properties>
                   <string name="Name">BindableSignal</string>
                   <string name="Source">local BSignal = {}
@@ -6730,7 +6713,7 @@ end
 return createBindableSignal</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="71">
+              <Item class="ModuleScript" referent="72">
                 <Properties>
                   <string name="Name">RemoteSignal</string>
                   <string name="Source">local Signal = {}
@@ -6794,7 +6777,7 @@ return createSignal</string>
                 </Properties>
               </Item>
             </Item>
-            <Item class="ModuleScript" referent="72">
+            <Item class="ModuleScript" referent="73">
               <Properties>
                 <string name="Name">util</string>
                 <string name="Source">return {
@@ -6803,7 +6786,7 @@ return createSignal</string>
     createLoop = require(script:WaitForChild("createLoop")),
 }</string>
               </Properties>
-              <Item class="ModuleScript" referent="73">
+              <Item class="ModuleScript" referent="74">
                 <Properties>
                   <string name="Name">createCounter</string>
                   <string name="Source">return function (t1:number, t2: number, increment: number, func)
@@ -6822,7 +6805,7 @@ return createSignal</string>
 end</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="74">
+              <Item class="ModuleScript" referent="75">
                 <Properties>
                   <string name="Name">createLoop</string>
                   <string name="Source">return function (item, func)
@@ -6841,7 +6824,7 @@ end</string>
 end</string>
                 </Properties>
               </Item>
-              <Item class="ModuleScript" referent="75">
+              <Item class="ModuleScript" referent="76">
                 <Properties>
                   <string name="Name">iterate</string>
                   <string name="Source">return function (t, func)
@@ -6864,23 +6847,23 @@ end</string>
           </Item>
         </Item>
       </Item>
-      <Item class="ModuleScript" referent="76">
+      <Item class="ModuleScript" referent="77">
         <Properties>
           <string name="Name">exon</string>
-          <string name="Source"><![CDATA[return require(script.Parent._Index["daulric_exon@0.0.48"]["exon"])
+          <string name="Source"><![CDATA[return require(script.Parent._Index["daulric_exon@0.0.49"]["exon"])
 ]]></string>
         </Properties>
       </Item>
     </Item>
-    <Item class="Folder" referent="77">
+    <Item class="Folder" referent="78">
       <Properties>
         <string name="Name">Shared</string>
       </Properties>
-      <Item class="Folder" referent="78">
+      <Item class="Folder" referent="79">
         <Properties>
           <string name="Name">Components</string>
         </Properties>
-        <Item class="ModuleScript" referent="79">
+        <Item class="ModuleScript" referent="80">
           <Properties>
             <string name="Name">CompileQuizUI</string>
             <string name="Source">local Players = game:GetService("Players")
@@ -6912,20 +6895,20 @@ return CompileQuiz</string>
           </Properties>
         </Item>
       </Item>
-      <Item class="Folder" referent="80">
+      <Item class="Folder" referent="81">
         <Properties>
           <string name="Name">Others</string>
         </Properties>
       </Item>
-      <Item class="Folder" referent="81">
+      <Item class="Folder" referent="82">
         <Properties>
           <string name="Name">QuizUI</string>
         </Properties>
-        <Item class="Folder" referent="82">
+        <Item class="Folder" referent="83">
           <Properties>
             <string name="Name">Buttons</string>
           </Properties>
-          <Item class="ModuleScript" referent="83">
+          <Item class="ModuleScript" referent="84">
             <Properties>
               <string name="Name">OptionButton</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -6981,11 +6964,11 @@ return OptionButtonComponent</string>
             </Properties>
           </Item>
         </Item>
-        <Item class="Folder" referent="84">
+        <Item class="Folder" referent="85">
           <Properties>
             <string name="Name">Items</string>
           </Properties>
-          <Item class="ModuleScript" referent="85">
+          <Item class="ModuleScript" referent="86">
             <Properties>
               <string name="Name">QuestionLabel</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7019,7 +7002,7 @@ end
 return QuizQuestionComponent</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="86">
+          <Item class="ModuleScript" referent="87">
             <Properties>
               <string name="Name">ScoreLabel</string>
               <string name="Source">local Players = game:GetService("Players")
@@ -7066,8 +7049,89 @@ end
 return ScoreLabelComponent</string>
             </Properties>
           </Item>
+          <Item class="ModuleScript" referent="88">
+            <Properties>
+              <string name="Name">SelectionMenu</string>
+              <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local exon = require(ReplicatedStorage.Packages.exon)
+
+local react = exon.react
+local rednet = exon.rednet
+
+local OptionButton = require(script.Parent.Parent:WaitForChild("Buttons").OptionButton)
+
+local SelectionMenu = react.Component:extend("Selection Menu")
+
+function SelectionMenu:init()
+    self.text, self.updateText = react.createBinding("")
+end
+
+function SelectionMenu:didMount()
+    rednet.listen("GetQuizOptions", function(options)
+
+        local TempButtons = {}
+
+        for i, v in pairs(options) do
+            local element = react.createElement(OptionButton, {
+                Text = v.category,
+                mouseClicked = function(element)
+                    self.updateText(element.Text)
+                end,
+            })
+
+            table.insert(TempButtons, element)
+        end
+
+        self:setState({
+            Buttons = TempButtons,
+        })
+
+    end)
+end
+
+function SelectionMenu:render()
+    return react.createElement("Frame", {
+        Name = "Selection Menu",
+        Size = UDim2.fromScale(0.3, 0.7),
+        Position = UDim2.fromScale(0.4, 0.5),
+        BackgroundColor3 = Color3.fromRGB(43, 43, 43),
+    }, {
+
+        TextLabel = react.createElement("TextLabel", {
+            Name = "SelectionText",
+            Text = self.text:map(function(value) 
+                rednet:FireServer("QuizTopicSelected", value)
+                return value
+            end),
+            Size = UDim2.fromScale(0.5, 0.3),
+            Font = Enum.Font.Cartoon,
+            TextScaled = true,
+        }, {
+            UIRatio = react.createElement("UIAspectRatioConstraint", {
+                AspectRatio = 5,
+            }),
+
+            ScrollingFrame = react.createElement("ScrollingFrame", {
+                Name = "ScrollingSelectionFrame",
+                Size = UDim2.fromScale(0.5, 0.7),
+                Position = UDim2.fromScale(0.4, 0.3),
+
+                BackgroundTransparency = 1,
+                
+            }, {
+                Buttons = react.createRef(self.state.Buttons),
+            })
+        }),
+
+        Buttons = react.createFragment(self.state.Buttons),
+    })
+end
+
+return SelectionMenu</string>
+            </Properties>
+          </Item>
         </Item>
-        <Item class="ModuleScript" referent="87">
+        <Item class="ModuleScript" referent="89">
           <Properties>
             <string name="Name">QAHandler</string>
             <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -7193,7 +7257,7 @@ end
 return QAHandler</string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="88">
+        <Item class="ModuleScript" referent="90">
           <Properties>
             <string name="Name">Quiz</string>
             <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7209,6 +7273,7 @@ local ItemsFolder = script.Parent:WaitForChild("Items")
 local QuizScreen = require(ScreenFolder.Screen)
 local Label = require(ScreenFolder.Label)
 local ScoreLabel = require(ItemsFolder.ScoreLabel)
+local SelectionMenu = require(ItemsFolder.SelectionMenu)
 
 local QAHandler = require(script.Parent:WaitForChild("QAHandler"))
 
@@ -7222,23 +7287,27 @@ function QuizComponent:render()
     return react.createElement("ScreenGui", {
         Name = "Quiz Panel",
         IgnoreGuiInset = true,
-    }, self.props[react.Children], {
+    }, {
+
+        Children = react.createFragment(self.props[react.Children]),
+
         ScreenElement = react.createElement(QuizScreen, {}, {
             Label = react.createElement(Label),
             QA = react.createElement(QAHandler),
             ScoreLabel = react.createElement(ScoreLabel),
-        })
+            SelectionMenu = react.createElement(SelectionMenu),
+        }),
     })
 end
 
 return QuizComponent</string>
           </Properties>
         </Item>
-        <Item class="Folder" referent="89">
+        <Item class="Folder" referent="91">
           <Properties>
             <string name="Name">Screen</string>
           </Properties>
-          <Item class="ModuleScript" referent="90">
+          <Item class="ModuleScript" referent="92">
             <Properties>
               <string name="Name">ButtonArea</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7253,7 +7322,9 @@ function ButtonArea:render()
         Size = UDim2.fromScale(0.5, 0.4),
         Position = UDim2.fromScale(0.3, 0.4),
         BackgroundColor3 = Color3.fromRGB(61, 61, 61)
-    }, self.props[react.Children],  {
+    },  {
+
+        Children = react.createFragment(self.props[react.Children]),
 
         UICorner = react.createElement("UICorner", {
             CornerRadius = UDim.new(0, 4),
@@ -7275,7 +7346,7 @@ end
 return ButtonArea</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="91">
+          <Item class="ModuleScript" referent="93">
             <Properties>
               <string name="Name">Label</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7304,7 +7375,7 @@ end
 return ScreenComponent</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="92">
+          <Item class="ModuleScript" referent="94">
             <Properties>
               <string name="Name">Screen</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7329,15 +7400,15 @@ return ScreenComponent</string>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerScriptService" referent="93">
+  <Item class="ServerScriptService" referent="95">
     <Properties>
       <string name="Name">ServerScriptService</string>
     </Properties>
-    <Item class="Folder" referent="94">
+    <Item class="Folder" referent="96">
       <Properties>
         <string name="Name">Server</string>
       </Properties>
-      <Item class="Script" referent="95">
+      <Item class="Script" referent="97">
         <Properties>
           <string name="Name">Execute</string>
           <token name="RunContext">0</token>
@@ -7354,7 +7425,7 @@ OneFrame.OnStart(Components):andThen(function()
 end)</string>
         </Properties>
       </Item>
-      <Item class="Script" referent="96">
+      <Item class="Script" referent="98">
         <Properties>
           <string name="Name">FreezePlayer</string>
           <token name="RunContext">0</token>
@@ -7369,19 +7440,19 @@ end)</string>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerStorage" referent="97">
+  <Item class="ServerStorage" referent="99">
     <Properties>
       <string name="Name">ServerStorage</string>
     </Properties>
-    <Item class="Folder" referent="98">
+    <Item class="Folder" referent="100">
       <Properties>
         <string name="Name">Shared</string>
       </Properties>
-      <Item class="Folder" referent="99">
+      <Item class="Folder" referent="101">
         <Properties>
           <string name="Name">Components</string>
         </Properties>
-        <Item class="ModuleScript" referent="100">
+        <Item class="ModuleScript" referent="102">
           <Properties>
             <string name="Name">ControllersExecute</string>
             <string name="Source"><![CDATA[local HttpService = game:GetService("HttpService")
@@ -7402,7 +7473,7 @@ end
 ]]></string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="101">
+        <Item class="ModuleScript" referent="103">
           <Properties>
             <string name="Name">Database</string>
             <string name="Source">local Players = game:GetService("Players")
@@ -7421,7 +7492,7 @@ function DatabaseComponent:preload()
 end
 
 function DatabaseComponent:playerAdded(player: Player)
-    local profile = db.LoadProfile("Player Databbase", player.UserId, {
+    local profile = db.LoadProfile("Player Database", player.UserId, {
         Score = 0,
     })
 
@@ -7481,7 +7552,7 @@ end
 return DatabaseComponent</string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="102">
+        <Item class="ModuleScript" referent="104">
           <Properties>
             <string name="Name">QuizDataManager</string>
             <string name="Source">local Players = game:GetService("Players")
@@ -7508,7 +7579,7 @@ function QuizManager:preload()
     self.count = 0
 end
 
-function QuizManager:GetQuiz(player: Player)
+function QuizManager:GetQuiz(player: Player, category)
 
     self.count += 1
 
@@ -7516,14 +7587,17 @@ function QuizManager:GetQuiz(player: Player)
         self.count = 1
     end
 
-    QuizApi:Get(20, self.mode[self.count], "multiple")
+    QuizApi:Get(20, self.mode[self.count], "multiple", category)
     task.wait()
     RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
 end
 
-function QuizManager:playerAdded(player)
+function QuizManager:playerAdded(player: Player)
     print("player added")
     if self.isAdded[player.UserId] == nil then
+        repeat
+            task.wait(1)
+        until player.CharacterAdded:Wait()
         self.isAdded[player.UserId] = true
         task.wait(2)
         self:GetQuiz(player)
@@ -7545,6 +7619,11 @@ function QuizManager:start()
         self:GetQuiz(player)
     end)
 
+    RedNet.listen("QuizTopicSelected", function(player, topic)
+        local topicIdFound = QuizApi:GetCategory(topic)
+        self:GetQuiz(player, topicIdFound)
+    end)
+
     Players.PlayerAdded:Connect(function(player)
         self:playerAdded(player)
     end)
@@ -7560,11 +7639,11 @@ return QuizManager</string>
           </Properties>
         </Item>
       </Item>
-      <Item class="Folder" referent="103">
+      <Item class="Folder" referent="105">
         <Properties>
           <string name="Name">Controllers</string>
         </Properties>
-        <Item class="ModuleScript" referent="104">
+        <Item class="ModuleScript" referent="106">
           <Properties>
             <string name="Name">QuizApi</string>
             <string name="Source">local HttpService = game:GetService("HttpService")
@@ -7578,7 +7657,8 @@ local rednet = exon.rednet
 local QuizApi = Controllers.CreateController {
     Name = "Quiz Api",
     Info = {
-        QuizInfo = {}
+        QuizInfo = {},
+        Categories = {},
     },
 
     Signal = rednet.createSignal(),
@@ -7591,9 +7671,41 @@ function QuizApi:Fire(data)
     self.Signal:Fire(data)
 end
 
+function QuizApi:GetCategories()
+    local url = "https://opentdb.com/api_category.php"
+    local urlData = HttpService:GetAsync(url)
+    local info = HttpService:JSONDecode(urlData)
+
+    for i, v in pairs(info.trivia_categories) do
+        local item = {
+            id = v.id,
+            category = v.name
+        }
+
+        table.insert(self.Info.Categories, item)
+    end
+
+end
+
+function QuizApi:GetCategory(category)
+
+    local chosenId = 0
+
+    for i, v in pairs(self:GetCategories()) do
+        if v.category == category then
+            chosenId = v.id
+            break
+        end
+    end
+
+    return chosenId
+
+end
+
 -- Getting Info using the API
-function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType)
-    local url = `https://opentdb.com/api.php?amount={amount}&amp;category=18&amp;difficulty={difficulty}&amp;type={type}`
+function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType, category: number)
+    category = category or 18
+    local url = `https://opentdb.com/api.php?amount={amount}&amp;category={category}&amp;difficulty={difficulty}&amp;type={type}`
     local urlData = HttpService:GetAsync(url, true)
     local info = HttpService:JSONDecode(urlData)
 
@@ -7612,19 +7724,19 @@ return QuizApi</string>
       </Item>
     </Item>
   </Item>
-  <Item class="StarterPlayer" referent="105">
+  <Item class="StarterPlayer" referent="107">
     <Properties>
       <string name="Name">StarterPlayer</string>
     </Properties>
-    <Item class="StarterPlayerScripts" referent="106">
+    <Item class="StarterPlayerScripts" referent="108">
       <Properties>
         <string name="Name">StarterPlayerScripts</string>
       </Properties>
-      <Item class="Folder" referent="107">
+      <Item class="Folder" referent="109">
         <Properties>
           <string name="Name">Client</string>
         </Properties>
-        <Item class="LocalScript" referent="108">
+        <Item class="LocalScript" referent="110">
           <Properties>
             <string name="Name">Execute</string>
             <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")

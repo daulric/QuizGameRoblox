@@ -11,6 +11,7 @@ local ItemsFolder = script.Parent:WaitForChild("Items")
 local QuizScreen = require(ScreenFolder.Screen)
 local Label = require(ScreenFolder.Label)
 local ScoreLabel = require(ItemsFolder.ScoreLabel)
+local SelectionMenu = require(ItemsFolder.SelectionMenu)
 
 local QAHandler = require(script.Parent:WaitForChild("QAHandler"))
 
@@ -32,7 +33,8 @@ function QuizComponent:render()
             Label = react.createElement(Label),
             QA = react.createElement(QAHandler),
             ScoreLabel = react.createElement(ScoreLabel),
-        })
+            SelectionMenu = react.createElement(SelectionMenu),
+        }),
     })
 end
 

@@ -32,6 +32,13 @@
           "$path": "Game/Client"
         }
       }
+    },
+
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+        "HttpEnabled": true
+      }
     }
   }
 }

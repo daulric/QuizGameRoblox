@@ -49,13 +49,23 @@ function SelectionMenu:render()
                 rednet:FireServer("QuizTopicSelected", value)
                 return value
             end),
-
             Size = UDim2.fromScale(0.5, 0.3),
             Font = Enum.Font.Cartoon,
             TextScaled = true,
         }, {
             UIRatio = react.createElement("UIAspectRatioConstraint", {
                 AspectRatio = 5,
+            }),
+
+            ScrollingFrame = react.createElement("ScrollingFrame", {
+                Name = "ScrollingSelectionFrame",
+                Size = UDim2.fromScale(0.5, 0.7),
+                Position = UDim2.fromScale(0.4, 0.3),
+
+                BackgroundTransparency = 1,
+                
+            }, {
+                Buttons = react.createRef(self.state.Buttons),
             })
         }),
 
