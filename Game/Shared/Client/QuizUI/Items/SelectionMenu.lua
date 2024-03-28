@@ -10,6 +10,9 @@ local SelectionMenu = react.Component:extend("Selection Menu")
 
 function SelectionMenu:init()
     self.text, self.updateText = react.createBinding("")
+    self:setState({
+        Buttons = {},
+    })
 end
 
 function SelectionMenu:didMount()
@@ -38,38 +41,47 @@ end
 function SelectionMenu:render()
     return react.createElement("Frame", {
         Name = "Selection Menu",
-        Size = UDim2.fromScale(0.3, 0.7),
-        Position = UDim2.fromScale(0.4, 0.5),
+        Size = UDim2.fromScale(0.2, 0.7),
+        Position = UDim2.fromScale(0.015,0.219),
         BackgroundColor3 = Color3.fromRGB(43, 43, 43),
     }, {
 
+        UICorner = react.createElement("UICorner", {
+            CornerRadius = UDim.new(0, 5),
+        }),
+
+        ScrollingFrame = react.createElement("ScrollingFrame", {
+            Name = "ScrollingSelectionFrame",
+            Size = UDim2.fromScale(1, 0.822),
+            Position = UDim2.fromScale(0, 0.178),
+            BorderColor3 = Color3.fromRGB(43, 43, 43),
+            BackgroundTransparency = 1,  
+        }, {
+            UIList = react.createElement("UIListLayout", {
+                HorizontalAlignment = Enum.HorizontalAlignment.Center,
+                Padding = UDim.new(0, 5),
+            }),
+
+            Buttons = react.createFragment(self.state.Buttons),
+        }),
+
         TextLabel = react.createElement("TextLabel", {
             Name = "SelectionText",
-            Text = self.text:map(function(value) 
+            Text = self.text:map(function(value)
                 rednet:FireServer("QuizTopicSelected", value)
                 return value
             end),
-            Size = UDim2.fromScale(0.5, 0.3),
+            TextColor3 = Color3.fromRGB(255, 255, 255),
+            Size = UDim2.fromScale(1, 0.09),
+            Position = UDim2.fromScale(0.144, 0.01),
             Font = Enum.Font.Cartoon,
             TextScaled = true,
+            BackgroundTransparency = 1,
         }, {
             UIRatio = react.createElement("UIAspectRatioConstraint", {
                 AspectRatio = 5,
             }),
-
-            ScrollingFrame = react.createElement("ScrollingFrame", {
-                Name = "ScrollingSelectionFrame",
-                Size = UDim2.fromScale(0.5, 0.7),
-                Position = UDim2.fromScale(0.4, 0.3),
-
-                BackgroundTransparency = 1,
-                
-            }, {
-                Buttons = react.createRef(self.state.Buttons),
-            })
         }),
-
-        Buttons = react.createFragment(self.state.Buttons),
     })
 end
 

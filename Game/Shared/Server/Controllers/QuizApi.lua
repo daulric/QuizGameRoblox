@@ -37,10 +37,11 @@ function QuizApi:GetCategories()
         table.insert(self.Info.Categories, item)
     end
 
+    return self.Info.Categories
+
 end
 
 function QuizApi:GetCategory(category)
-
     local chosenId = 0
 
     for i, v in pairs(self:GetCategories()) do
@@ -51,19 +52,25 @@ function QuizApi:GetCategory(category)
     end
 
     return chosenId
-
 end
 
 -- Getting Info using the API
 function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType, category: number)
     category = category or 18
-    local url = `https://opentdb.com/api.php?amount={amount}&category={category}&difficulty={difficulty}&type={type}`
-    local urlData = HttpService:GetAsync(url, true)
-    local info = HttpService:JSONDecode(urlData)
+
+    local s, data = pcall(function()
+        local url = `https://opentdb.com/api.php?amount={amount}&category={category}&difficulty={difficulty}&type={type}`
+        task.wait()
+        local urlData = HttpService:GetAsync(url)
+        local info = HttpService:JSONDecode(urlData)
+        return info
+    end)
+
+    assert(s, "Http Request Break!")
 
     table.clear(self.Info.QuizInfo)
 
-    for i, v in pairs(info) do
+    for i, v in pairs(data) do
         self.Info.QuizInfo[i] = v
     end
 end

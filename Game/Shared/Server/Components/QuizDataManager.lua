@@ -12,6 +12,7 @@ local QuizManager = OneFrame.Component.create("Quiz Manager")
 
 function QuizManager:preload()
     self.isAdded = {}
+    self.categoryNum = 18
 
     self.mode = {
         [1] = "easy",
@@ -30,6 +31,7 @@ function QuizManager:GetQuiz(player: Player, category)
         self.count = 1
     end
 
+    task.wait(1)
     QuizApi:Get(20, self.mode[self.count], "multiple", category)
     task.wait()
     RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
@@ -41,10 +43,8 @@ function QuizManager:playerAdded(player: Player)
         repeat
             task.wait(1)
         until player.CharacterAdded:Wait()
+        RedNet:FireClient(player,"GetQuizOptions", QuizApi:GetCategories())
         self.isAdded[player.UserId] = true
-        task.wait(2)
-        self:GetQuiz(player)
-        print("sent the data")
     end
 end
 
@@ -54,16 +54,18 @@ end
 
 function QuizManager:start()
 
-    for i, v in pairs(Players:GetPlayers()) do
+    for _, v in pairs(Players:GetPlayers()) do
         self:playerAdded(v)
     end
 
     RedNet.listen("resend_quiz", function(player)
-        self:GetQuiz(player)
+        self:GetQuiz(player, self.categoryNum)
     end)
 
     RedNet.listen("QuizTopicSelected", function(player, topic)
+        print("Selected:", topic)
         local topicIdFound = QuizApi:GetCategory(topic)
+        self.categoryNum = topicIdFound
         self:GetQuiz(player, topicIdFound)
     end)
 
