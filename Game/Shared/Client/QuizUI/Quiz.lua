@@ -24,7 +24,10 @@ function QuizComponent:render()
     return react.createElement("ScreenGui", {
         Name = "Quiz Panel",
         IgnoreGuiInset = true,
-    }, self.props[react.Children], {
+    }, {
+
+        Children = react.createFragment(self.props[react.Children]),
+
         ScreenElement = react.createElement(QuizScreen, {}, {
             Label = react.createElement(Label),
             QA = react.createElement(QAHandler),

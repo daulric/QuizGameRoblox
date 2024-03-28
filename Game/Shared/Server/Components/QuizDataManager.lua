@@ -22,7 +22,7 @@ function QuizManager:preload()
     self.count = 0
 end
 
-function QuizManager:GetQuiz(player: Player)
+function QuizManager:GetQuiz(player: Player, category)
 
     self.count += 1
 
@@ -30,7 +30,7 @@ function QuizManager:GetQuiz(player: Player)
         self.count = 1
     end
 
-    QuizApi:Get(20, self.mode[self.count], "multiple")
+    QuizApi:Get(20, self.mode[self.count], "multiple", category)
     task.wait()
     RedNet:FireClient(player, "QuizGetNow", QuizApi.Info.QuizInfo)
 end
@@ -60,6 +60,11 @@ function QuizManager:start()
 
     RedNet.listen("resend_quiz", function(player)
         self:GetQuiz(player)
+    end)
+
+    RedNet.listen("QuizTopicSelected", function(player, topic)
+        local topicIdFound = QuizApi:GetCategory(topic)
+        self:GetQuiz(player, topicIdFound)
     end)
 
     Players.PlayerAdded:Connect(function(player)

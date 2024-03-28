@@ -10,7 +10,9 @@ function ButtonArea:render()
         Size = UDim2.fromScale(0.5, 0.4),
         Position = UDim2.fromScale(0.3, 0.4),
         BackgroundColor3 = Color3.fromRGB(61, 61, 61)
-    }, self.props[react.Children],  {
+    },  {
+
+        Children = react.createFragment(self.props[react.Children]),
 
         UICorner = react.createElement("UICorner", {
             CornerRadius = UDim.new(0, 4),

@@ -55,7 +55,7 @@ function QuizApi:GetCategory(category)
 end
 
 -- Getting Info using the API
-function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType, category)
+function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType, category: number)
     category = category or 18
     local url = `https://opentdb.com/api.php?amount={amount}&category={category}&difficulty={difficulty}&type={type}`
     local urlData = HttpService:GetAsync(url, true)
