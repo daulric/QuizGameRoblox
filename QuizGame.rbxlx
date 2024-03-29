@@ -6930,7 +6930,7 @@ function OptionButtonComponent:render()
         TextScaled = true,
         BackgroundColor3 = Color3.fromRGB(46, 46, 46),
         TextColor3 = Color3.fromRGB(255, 255, 255),
-        Size = UDim2.new(0.5, 0, 0.5, 0),
+        Size = self.props.Size or UDim2.new(0.5, 0, 0.5, 0),
         Font = Enum.Font.Cartoon,
         [react.Event.MouseButton1Click] = function(element)
             self.sound:Play()
@@ -7015,6 +7015,7 @@ end
 function ScoreLabelComponent:didMount()
     local player = Players.LocalPlayer
 
+    self.updateScore(player:GetAttribute("Score"))
     player:GetAttributeChangedSignal("Score"):Connect(function()
         self.updateScore(player:GetAttribute("Score"))
     end)
@@ -7060,9 +7061,20 @@ local SelectionMenu = react.Component:extend("Selection Menu")
 
 function SelectionMenu:init()
     self.text, self.updateText = react.createBinding("")
+
     self:setState({
         Buttons = {},
     })
+end
+
+function SelectionMenu:AutoScale(element: ScrollingFrame)
+    repeat
+        task.wait()
+    until (self.listLayout ~= nil)
+
+    local listLayout: UIListLayout = self.listLayout
+
+    element.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y)
 end
 
 function SelectionMenu:didMount()
@@ -7070,9 +7082,10 @@ function SelectionMenu:didMount()
 
         local TempButtons = {}
 
-        for i, v in pairs(options) do
+        for _, v in pairs(options) do
             local element = react.createElement(OptionButton, {
                 Text = v,
+                Size = UDim2.fromScale(0.9, 0.4),
                 mouseClicked = function(element)
                     self.updateText(element.Text)
                 end,
@@ -7105,9 +7118,33 @@ function SelectionMenu:render()
             Size = UDim2.fromScale(1, 0.822),
             Position = UDim2.fromScale(0, 0.178),
             BorderColor3 = Color3.fromRGB(43, 43, 43),
-            BackgroundTransparency = 1,  
+            BackgroundTransparency = 1,
+            ScrollBarThickness = 5,
+
+            [react.Ref] = function(element)
+                if element ~= nil then
+                    task.spawn(function()
+                        local temp = Instance.new("HopperBin", element) -- This is there too trigger the autoscale event
+                        task.wait(3)
+                        temp:Destroy()
+                    end)
+                end
+            end,
+
+            [react.Event.ChildAdded] = function(element, ...)
+                task.wait(2)
+                self:AutoScale(element)
+            end,
+            [react.Event.ChildRemoved] = function(element, ...)
+                task.wait(2)
+                self:AutoScale(element)
+            end,
+
         }, {
             UIList = react.createElement("UIListLayout", {
+                [react.Ref] = function(element)
+                    self.listLayout = element
+                end,
                 HorizontalAlignment = Enum.HorizontalAlignment.Center,
                 Padding = UDim.new(0, 5),
             }),
@@ -7334,16 +7371,17 @@ function ButtonArea:render()
 
         Children = react.createFragment(self.props[react.Children]),
 
-        UICorner = react.createElement("UICorner", {
-            CornerRadius = UDim.new(0, 4),
-        }),
-
         UIGridLayout = react.createElement("UIGridLayout", {
             HorizontalAlignment = Enum.HorizontalAlignment.Center,
             VerticalAlignment = Enum.VerticalAlignment.Center,
             CellPadding = UDim2.fromOffset(5, 5),
             CellSize = UDim2.fromOffset(200, 50),
-        })
+        }),
+
+        UICorner = react.createElement("UICorner", {
+            CornerRadius = UDim.new(0, 4),
+        }),
+
     })
 end
 
@@ -7510,9 +7548,14 @@ function DatabaseComponent:playerAdded(player: Player)
 
     for i, v in pairs(profile.data) do
         player:SetAttribute(i, v)
+
+        player:GetAttributeChangedSignal(i):Connect(function()
+            profile.data[i] = player:GetAttribute(i)
+            task.wait()
+            profile:Save()
+        end)
     end
 
-    profile:AutoSave()
 end
 
 function DatabaseComponent:playerRemoved(player: Player)
@@ -7523,7 +7566,7 @@ end
 
 function DatabaseComponent:start()
 
-    for i, v in pairs(Players:GetPlayers()) do
+    for _, v in pairs(Players:GetPlayers()) do
         self:playerAdded(v)
     end
 
@@ -7533,16 +7576,17 @@ function DatabaseComponent:start()
 
     rednet.listen("score_update", function(player, increment)
         local profile = self.profiles[player.UserId]
+        local currentScore = player:GetAttribute("Score")
 
         if increment == true then
-            profile.data.Score += 10
+            currentScore += 10
         else
             if profile.data.Score > 0 then
-                profile.data.Score -= 10
+                currentScore -= 10
             end
         end
 
-        player:SetAttribute("Score", profile.data.Score)
+        player:SetAttribute("Score", currentScore)
     end)
 
 end
@@ -7684,8 +7728,8 @@ function QuizApi:GetCategories()
     local urlData = HttpService:GetAsync(url)
     local info = HttpService:JSONDecode(urlData)
 
-    for i, v in pairs(info.trivia_categories) do
-        table.insert(self.Info.Categories, i, v)
+    for _, v in pairs(info.trivia_categories) do
+        self.Info.Categories[v.id] = v.name
     end
 
     return self.Info.Categories
@@ -7779,6 +7823,7 @@ end)</string>
 local StarterGui = game:GetService("StarterGui")
 
 StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false)
 
 local Exon = require(ReplicatedStorage.Packages.exon)
 local OneFrame = Exon.oneframe

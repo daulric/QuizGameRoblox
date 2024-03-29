@@ -18,7 +18,6 @@ function DatabaseComponent:playerAdded(player: Player)
         Score = 0,
     })
 
-    print(profile.data)
     profile:Reconcile()
 
     profile.saving:Connect(function()

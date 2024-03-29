@@ -14,16 +14,17 @@ function ButtonArea:render()
 
         Children = react.createFragment(self.props[react.Children]),
 
-        UICorner = react.createElement("UICorner", {
-            CornerRadius = UDim.new(0, 4),
-        }),
-
         UIGridLayout = react.createElement("UIGridLayout", {
             HorizontalAlignment = Enum.HorizontalAlignment.Center,
             VerticalAlignment = Enum.VerticalAlignment.Center,
             CellPadding = UDim2.fromOffset(5, 5),
             CellSize = UDim2.fromOffset(200, 50),
-        })
+        }),
+
+        UICorner = react.createElement("UICorner", {
+            CornerRadius = UDim.new(0, 4),
+        }),
+
     })
 end
 
