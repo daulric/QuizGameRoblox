@@ -12,6 +12,7 @@ end
 function ScoreLabelComponent:didMount()
     local player = Players.LocalPlayer
 
+    self.updateScore(player:GetAttribute("Score"))
     player:GetAttributeChangedSignal("Score"):Connect(function()
         self.updateScore(player:GetAttribute("Score"))
     end)

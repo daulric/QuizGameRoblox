@@ -18,10 +18,6 @@ function ButtonArea:render()
             CornerRadius = UDim.new(0, 4),
         }),
 
-        UIAspect = react.createElement("UIAspectRatioConstraint", {
-            AspectRatio = 3
-        }),
-
         UIGridLayout = react.createElement("UIGridLayout", {
             HorizontalAlignment = Enum.HorizontalAlignment.Center,
             VerticalAlignment = Enum.VerticalAlignment.Center,

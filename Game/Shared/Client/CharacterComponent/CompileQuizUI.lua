@@ -11,16 +11,11 @@ local Component = require(QuizUIFolder.Quiz)
 
 local CompileQuiz = OneFrame.Component.create("Compile Quiz UI")
 
-
-function CompileQuiz:start()
-
+function CompileQuiz:start(char)
+    local player = Players.LocalPlayer
+    print(char.Name, "added")
     local Element = React.createElement(Component)
-
-    local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
-
-    player.CharacterAdded:Connect(function()
-        React.mount(Element, player.PlayerGui)
-    end)
+    React.mount(Element, player.PlayerGui)
 end
 
 return CompileQuiz

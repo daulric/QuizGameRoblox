@@ -6857,7 +6857,7 @@ end</string>
       </Properties>
       <Item class="Folder" referent="79">
         <Properties>
-          <string name="Name">Components</string>
+          <string name="Name">CharacterComponent</string>
         </Properties>
         <Item class="ModuleScript" referent="80">
           <Properties>
@@ -6875,16 +6875,11 @@ local Component = require(QuizUIFolder.Quiz)
 
 local CompileQuiz = OneFrame.Component.create("Compile Quiz UI")
 
-
-function CompileQuiz:start()
-
+function CompileQuiz:start(char)
+    local player = Players.LocalPlayer
+    print(char.Name, "added")
     local Element = React.createElement(Component)
-
-    local player = Players.LocalPlayer or Players.PlayerAdded:Wait()
-
-    player.CharacterAdded:Connect(function()
-        React.mount(Element, player.PlayerGui)
-    end)
+    React.mount(Element, player.PlayerGui)
 end
 
 return CompileQuiz</string>
@@ -6893,18 +6888,23 @@ return CompileQuiz</string>
       </Item>
       <Item class="Folder" referent="81">
         <Properties>
-          <string name="Name">Others</string>
+          <string name="Name">Components</string>
         </Properties>
       </Item>
       <Item class="Folder" referent="82">
         <Properties>
+          <string name="Name">Others</string>
+        </Properties>
+      </Item>
+      <Item class="Folder" referent="83">
+        <Properties>
           <string name="Name">QuizUI</string>
         </Properties>
-        <Item class="Folder" referent="83">
+        <Item class="Folder" referent="84">
           <Properties>
             <string name="Name">Buttons</string>
           </Properties>
-          <Item class="ModuleScript" referent="84">
+          <Item class="ModuleScript" referent="85">
             <Properties>
               <string name="Name">OptionButton</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -6960,11 +6960,11 @@ return OptionButtonComponent</string>
             </Properties>
           </Item>
         </Item>
-        <Item class="Folder" referent="85">
+        <Item class="Folder" referent="86">
           <Properties>
             <string name="Name">Items</string>
           </Properties>
-          <Item class="ModuleScript" referent="86">
+          <Item class="ModuleScript" referent="87">
             <Properties>
               <string name="Name">QuestionLabel</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -6998,7 +6998,7 @@ end
 return QuizQuestionComponent</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="87">
+          <Item class="ModuleScript" referent="88">
             <Properties>
               <string name="Name">ScoreLabel</string>
               <string name="Source">local Players = game:GetService("Players")
@@ -7045,7 +7045,7 @@ end
 return ScoreLabelComponent</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="88">
+          <Item class="ModuleScript" referent="89">
             <Properties>
               <string name="Name">SelectionMenu</string>
               <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -7072,7 +7072,7 @@ function SelectionMenu:didMount()
 
         for i, v in pairs(options) do
             local element = react.createElement(OptionButton, {
-                Text = v.category,
+                Text = v,
                 mouseClicked = function(element)
                     self.updateText(element.Text)
                 end,
@@ -7139,7 +7139,7 @@ return SelectionMenu</string>
             </Properties>
           </Item>
         </Item>
-        <Item class="ModuleScript" referent="89">
+        <Item class="ModuleScript" referent="90">
           <Properties>
             <string name="Name">QAHandler</string>
             <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -7233,7 +7233,7 @@ function QAHandler:didMount()
             })
 
             repeat
-                task.wait(1)
+                task.wait()
             until (Answered == true)
 
             task.wait(2)
@@ -7265,7 +7265,7 @@ end
 return QAHandler</string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="90">
+        <Item class="ModuleScript" referent="91">
           <Properties>
             <string name="Name">Quiz</string>
             <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7311,11 +7311,11 @@ end
 return QuizComponent</string>
           </Properties>
         </Item>
-        <Item class="Folder" referent="91">
+        <Item class="Folder" referent="92">
           <Properties>
             <string name="Name">Screen</string>
           </Properties>
-          <Item class="ModuleScript" referent="92">
+          <Item class="ModuleScript" referent="93">
             <Properties>
               <string name="Name">ButtonArea</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7338,10 +7338,6 @@ function ButtonArea:render()
             CornerRadius = UDim.new(0, 4),
         }),
 
-        UIAspect = react.createElement("UIAspectRatioConstraint", {
-            AspectRatio = 3
-        }),
-
         UIGridLayout = react.createElement("UIGridLayout", {
             HorizontalAlignment = Enum.HorizontalAlignment.Center,
             VerticalAlignment = Enum.VerticalAlignment.Center,
@@ -7354,7 +7350,7 @@ end
 return ButtonArea</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="93">
+          <Item class="ModuleScript" referent="94">
             <Properties>
               <string name="Name">Label</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7383,7 +7379,7 @@ end
 return ScreenComponent</string>
             </Properties>
           </Item>
-          <Item class="ModuleScript" referent="94">
+          <Item class="ModuleScript" referent="95">
             <Properties>
               <string name="Name">Screen</string>
               <string name="Source">local exon = require(game.ReplicatedStorage.Packages.exon)
@@ -7408,15 +7404,15 @@ return ScreenComponent</string>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerScriptService" referent="95">
+  <Item class="ServerScriptService" referent="96">
     <Properties>
       <string name="Name">ServerScriptService</string>
     </Properties>
-    <Item class="Folder" referent="96">
+    <Item class="Folder" referent="97">
       <Properties>
         <string name="Name">Server</string>
       </Properties>
-      <Item class="Script" referent="97">
+      <Item class="Script" referent="98">
         <Properties>
           <string name="Name">Execute</string>
           <token name="RunContext">0</token>
@@ -7433,7 +7429,7 @@ OneFrame.OnStart(Components):andThen(function()
 end)</string>
         </Properties>
       </Item>
-      <Item class="Script" referent="98">
+      <Item class="Script" referent="99">
         <Properties>
           <string name="Name">FreezePlayer</string>
           <token name="RunContext">0</token>
@@ -7448,19 +7444,19 @@ end)</string>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerStorage" referent="99">
+  <Item class="ServerStorage" referent="100">
     <Properties>
       <string name="Name">ServerStorage</string>
     </Properties>
-    <Item class="Folder" referent="100">
+    <Item class="Folder" referent="101">
       <Properties>
         <string name="Name">Shared</string>
       </Properties>
-      <Item class="Folder" referent="101">
+      <Item class="Folder" referent="102">
         <Properties>
           <string name="Name">Components</string>
         </Properties>
-        <Item class="ModuleScript" referent="102">
+        <Item class="ModuleScript" referent="103">
           <Properties>
             <string name="Name">ControllersExecute</string>
             <string name="Source"><![CDATA[local HttpService = game:GetService("HttpService")
@@ -7481,7 +7477,7 @@ end
 ]]></string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="103">
+        <Item class="ModuleScript" referent="104">
           <Properties>
             <string name="Name">Database</string>
             <string name="Source">local Players = game:GetService("Players")
@@ -7560,7 +7556,7 @@ end
 return DatabaseComponent</string>
           </Properties>
         </Item>
-        <Item class="ModuleScript" referent="104">
+        <Item class="ModuleScript" referent="105">
           <Properties>
             <string name="Name">QuizDataManager</string>
             <string name="Source">local Players = game:GetService("Players")
@@ -7577,6 +7573,7 @@ local QuizManager = OneFrame.Component.create("Quiz Manager")
 
 function QuizManager:preload()
     self.isAdded = {}
+    self.categoryNum = 18
 
     self.mode = {
         [1] = "easy",
@@ -7605,8 +7602,10 @@ function QuizManager:playerAdded(player: Player)
     print("player added")
     if self.isAdded[player.UserId] == nil then
         repeat
-            task.wait(1)
+            task.wait()
         until player.CharacterAdded:Wait()
+        print("sending quiz options in a sec....")
+        task.wait(2)
         RedNet:FireClient(player,"GetQuizOptions", QuizApi:GetCategories())
         self.isAdded[player.UserId] = true
     end
@@ -7618,17 +7617,18 @@ end
 
 function QuizManager:start()
 
-    for i, v in pairs(Players:GetPlayers()) do
+    for _, v in pairs(Players:GetPlayers()) do
         self:playerAdded(v)
     end
 
     RedNet.listen("resend_quiz", function(player)
-        self:GetQuiz(player, )
+        self:GetQuiz(player, self.categoryNum)
     end)
 
     RedNet.listen("QuizTopicSelected", function(player, topic)
         print("Selected:", topic)
         local topicIdFound = QuizApi:GetCategory(topic)
+        self.categoryNum = topicIdFound
         self:GetQuiz(player, topicIdFound)
     end)
 
@@ -7647,11 +7647,11 @@ return QuizManager</string>
           </Properties>
         </Item>
       </Item>
-      <Item class="Folder" referent="105">
+      <Item class="Folder" referent="106">
         <Properties>
           <string name="Name">Controllers</string>
         </Properties>
-        <Item class="ModuleScript" referent="106">
+        <Item class="ModuleScript" referent="107">
           <Properties>
             <string name="Name">QuizApi</string>
             <string name="Source">local HttpService = game:GetService("HttpService")
@@ -7685,25 +7685,18 @@ function QuizApi:GetCategories()
     local info = HttpService:JSONDecode(urlData)
 
     for i, v in pairs(info.trivia_categories) do
-        local item = {
-            id = v.id,
-            category = v.name
-        }
-
-        table.insert(self.Info.Categories, item)
+        table.insert(self.Info.Categories, i, v)
     end
 
     return self.Info.Categories
-
 end
 
 function QuizApi:GetCategory(category)
-
     local chosenId = 0
 
     for i, v in pairs(self:GetCategories()) do
-        if v.category == category then
-            chosenId = v.id
+        if v == category then
+            chosenId = i
             break
         end
     end
@@ -7715,7 +7708,7 @@ end
 function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType, category: number)
     category = category or 18
 
-    local success, data = pcall(function()
+    local s, data = pcall(function()
         local url = `https://opentdb.com/api.php?amount={amount}&amp;category={category}&amp;difficulty={difficulty}&amp;type={type}`
         task.wait()
         local urlData = HttpService:GetAsync(url)
@@ -7723,7 +7716,7 @@ function QuizApi:Get(amount: number, difficulty: difficulty, type: GameType, cat
         return info
     end)
 
-    assert(success, "Error With Http Requests")
+    assert(s, "Http Request Break!")
 
     table.clear(self.Info.QuizInfo)
 
@@ -7740,19 +7733,46 @@ return QuizApi</string>
       </Item>
     </Item>
   </Item>
-  <Item class="StarterPlayer" referent="107">
+  <Item class="StarterPlayer" referent="108">
     <Properties>
       <string name="Name">StarterPlayer</string>
     </Properties>
-    <Item class="StarterPlayerScripts" referent="108">
+    <Item class="StarterCharacterScripts" referent="109">
       <Properties>
-        <string name="Name">StarterPlayerScripts</string>
+        <string name="Name">StarterCharacterScripts</string>
       </Properties>
-      <Item class="Folder" referent="109">
+      <Item class="Folder" referent="110">
         <Properties>
           <string name="Name">Client</string>
         </Properties>
-        <Item class="LocalScript" referent="110">
+        <Item class="LocalScript" referent="111">
+          <Properties>
+            <string name="Name">Execute</string>
+            <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Exon = require(ReplicatedStorage.Packages.exon)
+
+local CharacterComponent = ReplicatedStorage.Shared.CharacterComponent
+
+local OneFrame = Exon.oneframe
+
+local character = script.Parent.Parent
+
+OneFrame.OnStart(CharacterComponent, character):andThen(function()
+    print("Character Components Loaded!")
+end)</string>
+          </Properties>
+        </Item>
+      </Item>
+    </Item>
+    <Item class="StarterPlayerScripts" referent="112">
+      <Properties>
+        <string name="Name">StarterPlayerScripts</string>
+      </Properties>
+      <Item class="Folder" referent="113">
+        <Properties>
+          <string name="Name">Client</string>
+        </Properties>
+        <Item class="LocalScript" referent="114">
           <Properties>
             <string name="Name">Execute</string>
             <string name="Source">local ReplicatedStorage = game:GetService("ReplicatedStorage")

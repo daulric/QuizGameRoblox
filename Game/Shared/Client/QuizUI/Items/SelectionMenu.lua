@@ -10,9 +10,20 @@ local SelectionMenu = react.Component:extend("Selection Menu")
 
 function SelectionMenu:init()
     self.text, self.updateText = react.createBinding("")
+
     self:setState({
         Buttons = {},
     })
+end
+
+function SelectionMenu:AutoScale(element: ScrollingFrame)
+    repeat
+        task.wait()
+    until (self.listLayout ~= nil)
+
+    local listLayout: UIListLayout = self.listLayout
+
+    element.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y)
 end
 
 function SelectionMenu:didMount()
@@ -20,9 +31,10 @@ function SelectionMenu:didMount()
 
         local TempButtons = {}
 
-        for i, v in pairs(options) do
+        for _, v in pairs(options) do
             local element = react.createElement(OptionButton, {
-                Text = v.category,
+                Text = v,
+                Size = UDim2.fromScale(0.9, 0.4),
                 mouseClicked = function(element)
                     self.updateText(element.Text)
                 end,
@@ -55,9 +67,33 @@ function SelectionMenu:render()
             Size = UDim2.fromScale(1, 0.822),
             Position = UDim2.fromScale(0, 0.178),
             BorderColor3 = Color3.fromRGB(43, 43, 43),
-            BackgroundTransparency = 1,  
+            BackgroundTransparency = 1,
+            ScrollBarThickness = 5,
+
+            [react.Ref] = function(element)
+                if element ~= nil then
+                    task.spawn(function()
+                        local temp = Instance.new("HopperBin", element) -- This is there too trigger the autoscale event
+                        task.wait(3)
+                        temp:Destroy()
+                    end)
+                end
+            end,
+
+            [react.Event.ChildAdded] = function(element, ...)
+                task.wait(2)
+                self:AutoScale(element)
+            end,
+            [react.Event.ChildRemoved] = function(element, ...)
+                task.wait(2)
+                self:AutoScale(element)
+            end,
+
         }, {
             UIList = react.createElement("UIListLayout", {
+                [react.Ref] = function(element)
+                    self.listLayout = element
+                end,
                 HorizontalAlignment = Enum.HorizontalAlignment.Center,
                 Padding = UDim.new(0, 5),
             }),

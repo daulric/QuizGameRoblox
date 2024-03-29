@@ -28,25 +28,19 @@ function QuizApi:GetCategories()
     local urlData = HttpService:GetAsync(url)
     local info = HttpService:JSONDecode(urlData)
 
-    for i, v in pairs(info.trivia_categories) do
-        local item = {
-            id = v.id,
-            category = v.name
-        }
-
-        table.insert(self.Info.Categories, item)
+    for _, v in pairs(info.trivia_categories) do
+        self.Info.Categories[v.id] = v.name
     end
 
     return self.Info.Categories
-
 end
 
 function QuizApi:GetCategory(category)
     local chosenId = 0
 
     for i, v in pairs(self:GetCategories()) do
-        if v.category == category then
-            chosenId = v.id
+        if v == category then
+            chosenId = i
             break
         end
     end

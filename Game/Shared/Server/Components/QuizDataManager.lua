@@ -41,8 +41,10 @@ function QuizManager:playerAdded(player: Player)
     print("player added")
     if self.isAdded[player.UserId] == nil then
         repeat
-            task.wait(1)
+            task.wait()
         until player.CharacterAdded:Wait()
+        print("sending quiz options in a sec....")
+        task.wait(2)
         RedNet:FireClient(player,"GetQuizOptions", QuizApi:GetCategories())
         self.isAdded[player.UserId] = true
     end

@@ -21,7 +21,7 @@ function OptionButtonComponent:render()
         TextScaled = true,
         BackgroundColor3 = Color3.fromRGB(46, 46, 46),
         TextColor3 = Color3.fromRGB(255, 255, 255),
-        Size = UDim2.new(0.5, 0, 0.5, 0),
+        Size = self.props.Size or UDim2.new(0.5, 0, 0.5, 0),
         Font = Enum.Font.Cartoon,
         [react.Event.MouseButton1Click] = function(element)
             self.sound:Play()

@@ -89,7 +89,7 @@ function QAHandler:didMount()
             })
 
             repeat
-                task.wait(1)
+                task.wait()
             until (Answered == true)
 
             task.wait(2)
