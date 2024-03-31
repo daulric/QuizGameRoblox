@@ -18,6 +18,7 @@ function DatabaseComponent:playerAdded(player: Player)
         Score = 0,
     })
 
+    print(player.Name, profile.data)
     profile:Reconcile()
 
     profile.saving:Connect(function()
@@ -31,8 +32,6 @@ function DatabaseComponent:playerAdded(player: Player)
 
         player:GetAttributeChangedSignal(i):Connect(function()
             profile.data[i] = player:GetAttribute(i)
-            task.wait()
-            profile:Save()
         end)
     end
 
@@ -40,8 +39,12 @@ end
 
 function DatabaseComponent:playerRemoved(player: Player)
     local profile = self.profiles[player.UserId]
-    profile:Save()
-    profile:Close()
+
+    if profile ~= nil then
+        profile:Close()
+        self.profiles[player.UserId] = nil
+    end
+
 end
 
 function DatabaseComponent:start()
@@ -54,14 +57,17 @@ function DatabaseComponent:start()
         self:playerAdded(player)
     end)
 
+    Players.PlayerRemoving:Connect(function(player)
+        self:playerRemoved(player)
+    end)
+
     rednet.listen("score_update", function(player, increment)
-        local profile = self.profiles[player.UserId]
         local currentScore = player:GetAttribute("Score")
 
         if increment == true then
             currentScore += 10
         else
-            if profile.data.Score > 0 then
+            if currentScore > 0 then
                 currentScore -= 10
             end
         end

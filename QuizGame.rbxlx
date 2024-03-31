@@ -19,7 +19,7 @@
         </Properties>
         <Item class="Folder" referent="4">
           <Properties>
-            <string name="Name">daulric_exon@0.0.50</string>
+            <string name="Name">daulric_exon@0.0.51</string>
           </Properties>
           <Item class="ModuleScript" referent="5">
             <Properties>
@@ -1460,7 +1460,7 @@ function DB:__get()
         end
 
         --// Session Locking
-        if olddata.sessionId == nil then
+        if olddata.sessionId == "" then
             olddata.sessionId = game.JobId
         elseif olddata.sessionId ~= game.JobId then
             warn(`[Exon DB]: {self.Id} profile in {self.Name} is currently opened in another server;`)
@@ -1516,7 +1516,7 @@ function DB:Close()
     local success, err = pcall(function()
         self.database:UpdateAsync(self.Id, function(oldData)
             if oldData.sessionId == game.JobId then
-                oldData.sessionId = nil
+                oldData.sessionId = ""
             end
 
             if self.data ~= nil and type(self.data) == "table" then
@@ -6846,7 +6846,7 @@ end</string>
       <Item class="ModuleScript" referent="77">
         <Properties>
           <string name="Name">exon</string>
-          <string name="Source"><![CDATA[return require(script.Parent._Index["daulric_exon@0.0.50"]["exon"])
+          <string name="Source"><![CDATA[return require(script.Parent._Index["daulric_exon@0.0.51"]["exon"])
 ]]></string>
         </Properties>
       </Item>
@@ -7538,6 +7538,7 @@ function DatabaseComponent:playerAdded(player: Player)
         Score = 0,
     })
 
+    print(player.Name, profile.data)
     profile:Reconcile()
 
     profile.saving:Connect(function()
@@ -7551,8 +7552,6 @@ function DatabaseComponent:playerAdded(player: Player)
 
         player:GetAttributeChangedSignal(i):Connect(function()
             profile.data[i] = player:GetAttribute(i)
-            task.wait()
-            profile:Save()
         end)
     end
 
@@ -7560,8 +7559,12 @@ end
 
 function DatabaseComponent:playerRemoved(player: Player)
     local profile = self.profiles[player.UserId]
-    profile:Save()
-    profile:Close()
+
+    if profile ~= nil then
+        profile:Close()
+        self.profiles[player.UserId] = nil
+    end
+
 end
 
 function DatabaseComponent:start()
@@ -7574,14 +7577,17 @@ function DatabaseComponent:start()
         self:playerAdded(player)
     end)
 
+    Players.PlayerRemoving:Connect(function(player)
+        self:playerRemoved(player)
+    end)
+
     rednet.listen("score_update", function(player, increment)
-        local profile = self.profiles[player.UserId]
         local currentScore = player:GetAttribute("Score")
 
         if increment == true then
             currentScore += 10
         else
-            if profile.data.Score > 0 then
+            if currentScore > 0 then
                 currentScore -= 10
             end
         end

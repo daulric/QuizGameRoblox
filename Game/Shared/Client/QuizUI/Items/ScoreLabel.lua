@@ -23,6 +23,10 @@ function ScoreLabelComponent:render()
     return react.createElement("TextLabel", {
         Name = "Score Label",
         Text = self.Score:map(function(value)
+            if value == nil then
+                value = 0
+            end
+
             return "Score: "..value
         end),
 
